@@ -312,3 +312,8 @@ header {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-3px);
 }
+
+::selection {
+    background: #00f7ff;
+    color: black;
+}
