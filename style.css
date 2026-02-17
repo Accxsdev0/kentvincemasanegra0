@@ -78,7 +78,8 @@ header {
 
 .section img {
     width: 100%;
-    max-width: 250px;
+    max-width: 400px;
+    height: auto;
 }
 
 .text-right, .text-left {
@@ -97,16 +98,21 @@ header {
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     padding: 10px 0;
+    background: black;
 }
 
 .marquee-content {
-    display: inline-block;
-    animation: scroll 10s linear infinite;
+    display: inline-flex;
+    animation: scroll 15s linear infinite;
+}
+
+.marquee-content span {
+    padding-right: 50px;
 }
 
 @keyframes scroll {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 
 /* BACK TO TOP */
