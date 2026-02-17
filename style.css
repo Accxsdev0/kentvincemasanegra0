@@ -219,6 +219,18 @@ header {
     border-top: 1px solid #222;
 }
 
+.footer-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-hacker-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
 .footer-inner {
     display: flex;
     justify-content: space-between;
@@ -233,7 +245,7 @@ header {
 .footer-info p {
     margin: 4px 0;
     color: #aaa;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .footer-social a {
@@ -282,6 +294,7 @@ header {
     height: 16px;
     margin: 0 6px;
     vertical-align: middle;
+    filter: drop-shadow(0 0 6px rgba(0, 119, 255, 0.7));
 }
 
 /* IMAGE MODAL */
