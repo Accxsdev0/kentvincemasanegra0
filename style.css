@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo-area img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.hamburger {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* SIDE PANEL */
+.side-panel {
+    position: fixed;
+    right: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: rgba(50, 50, 50, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.side-panel a {
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.side-panel a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* OVERLAY */
+#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 999;
+}
+
+/* SECTIONS */
+.section {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.section img {
+    width: 100%;
+    max-width: 250px;
+}
+
+.text-right, .text-left {
+    padding: 20px;
+    text-align: justify;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+/* MARQUEE */
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 10px 0;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+/* BACK TO TOP */
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    color: black;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: none;
+}
