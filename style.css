@@ -12,6 +12,19 @@ body {
     overflow-x: hidden;
 }
 
+.page-hidden{
+    overflow:hidden;
+}
+
+.page-reveal{
+    animation: pageReveal 1.2s forwards;
+}
+
+.intro-content{
+    position:relative;
+    z-index:10;
+}
+
 /* CONTAINER */
 .container {
     max-width: 1000px;
