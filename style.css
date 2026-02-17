@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-/* ================= BODY ================= */
+/* BODY */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -12,14 +12,14 @@ body {
     overflow-x: hidden;
 }
 
-/* ================= CONTAINER ================= */
+/* CONTAINER */
 .container {
     max-width: 1100px;
     margin: auto;
     padding-top: 90px;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 header {
     position: fixed;
     top: 0;
@@ -35,6 +35,7 @@ header {
     border-bottom: 1px solid #222;
 }
 
+/* Make header clickable */
 .logo-area a {
     display: flex;
     align-items: center;
@@ -47,14 +48,14 @@ header {
     margin-right: 10px;
 }
 
-/* ================= HAMBURGER ================= */
+/* HAMBURGER */
 .hamburger {
     font-size: 28px;
     cursor: pointer;
     color: white;
 }
 
-/* ================= SIDE PANEL ================= */
+/* SIDE PANEL */
 .side-panel {
     position: fixed;
     right: -250px;
@@ -66,7 +67,7 @@ header {
     flex-direction: column;
     padding-top: 90px;
     transition: 0.3s ease;
-    z-index: 4000;
+    z-index: 4000; /* HIGHER than header */
 }
 
 .side-panel.active {
@@ -83,7 +84,7 @@ header {
     background: rgba(255,255,255,0.2);
 }
 
-/* ================= OVERLAY ================= */
+/* OVERLAY */
 #overlay {
     position: fixed;
     inset: 0;
@@ -96,13 +97,13 @@ header {
     display: block;
 }
 
-/* ================= SECTIONS ================= */
+/* SECTIONS */
 .section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding: 80px 20px;
+    padding: 60px 20px;
 }
 
 .section img {
@@ -111,7 +112,6 @@ header {
     height: auto;
     cursor: pointer;
     transition: 0.3s;
-    border-radius: 10px;
 }
 
 .section img:hover {
@@ -128,72 +128,7 @@ header {
     flex-direction: row-reverse;
 }
 
-/* ================= BACKGROUND IMAGE WRAPPER ================= */
-.image-background {
-    position: relative;
-    background: url("image/defaultimg.png") center/cover no-repeat fixed;
-}
-
-.image-background::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-}
-
-.image-background > * {
-    position: relative;
-}
-
-/* ================= CATEGORY 3 CARD ================= */
-.card-section {
-    padding: 100px 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.project-card {
-    max-width: 800px;
-    background: rgba(20, 20, 20, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.4s ease;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-}
-
-.project-card img {
-    width: 100%;
-    display: block;
-}
-
-.card-content {
-    padding: 30px;
-}
-
-.short-text {
-    opacity: 1;
-    transition: 0.3s ease;
-}
-
-.long-text {
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.5s ease;
-    opacity: 0;
-}
-
-.project-card:hover {
-    transform: translateY(-12px);
-}
-
-.project-card:hover .long-text {
-    max-height: 500px;
-    opacity: 1;
-    margin-top: 15px;
-}
-
-/* ================= MARQUEE ================= */
+/* MARQUEE */
 .marquee {
     overflow: hidden;
     border-top: 1px solid white;
@@ -212,7 +147,7 @@ header {
     to { transform: translateX(-50%); }
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 .footer {
     background: #0d0d0d;
     padding: 30px 20px 15px;
@@ -241,6 +176,13 @@ header {
     margin-left: 15px;
 }
 
+.footer-bottom {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-top: 15px;
+}
+
 .footer-social img {
     width: 28px;
     height: 28px;
@@ -252,14 +194,7 @@ header {
     transform: scale(1.2);
 }
 
-.footer-bottom {
-    text-align: center;
-    font-size: 13px;
-    color: #666;
-    margin-top: 15px;
-}
-
-/* ================= IMAGE MODAL ================= */
+/* IMAGE MODAL */
 .image-modal {
     position: fixed;
     inset: 0;
@@ -268,7 +203,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 5000;
+    z-index: 5000; /* HIGHEST */
     opacity: 0;
     visibility: hidden;
     transition: 0.3s ease;
@@ -292,7 +227,7 @@ header {
     cursor: pointer;
 }
 
-/* ================= BACK TO TOP ================= */
+/* BACK TO TOP */
 #backToTop {
     position: fixed;
     bottom: 30px;
@@ -314,21 +249,3 @@ header {
     transform: translateY(-3px);
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px) {
-    .section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .text-left,
-    .text-right {
-        text-align: center;
-    }
-
-    .footer-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-}
