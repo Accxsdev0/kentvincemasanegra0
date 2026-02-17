@@ -48,6 +48,15 @@ header {
     margin-right: 10px;
 }
 
+.logo-area h2 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 3px;
+    font-weight: 700;
+    font-size: 22px;
+    color: #00f7ff;
+    text-shadow: 0 0 8px rgba(0, 247, 255, 0.7);
+}
+
 /* HAMBURGER */
 .hamburger {
     font-size: 28px;
@@ -130,21 +139,46 @@ header {
 
 /* MARQUEE */
 .marquee {
+    position: relative;
     overflow: hidden;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    padding: 12px 0;
+    padding: 15px 0;
+    background: rgba(0, 255, 255, 0.05);
+}
+
+/* glowing top & bottom lines */
+.marquee::before,
+.marquee::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f7ff, transparent);
+    animation: glowLine 3s linear infinite;
+}
+
+.marquee::before {
+    top: 0;
+}
+
+.marquee::after {
+    bottom: 0;
+}
+
+@keyframes glowLine {
+    0% { background-position: -200px; }
+    100% { background-position: 200px; }
 }
 
 .marquee-track {
     display: inline-block;
     white-space: nowrap;
     animation: scroll 20s linear infinite;
-}
-
-@keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 4px;
+    font-size: 14px;
+    color: #00f7ff;
+    text-shadow: 0 0 8px rgba(0, 247, 255, 0.8);
 }
 
 /* FOOTER */
