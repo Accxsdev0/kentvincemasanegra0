@@ -44,7 +44,7 @@ const marqueeTrack = document.getElementById("marqueeTrack");
 
 // Duplicate content until it fills screen
 function fillMarquee() {
-    const baseText = "Develop • Design • Deploy ";
+    const baseText = "Develop • Design • Deploy • ";
     marqueeTrack.innerHTML = baseText;
 
     while (marqueeTrack.offsetWidth < window.innerWidth * 2) {
