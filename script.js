@@ -55,6 +55,8 @@ function fillMarquee() {
 fillMarquee();
 window.addEventListener("resize", fillMarquee);
 
+document.addEventListener("DOMContentLoaded", function() {
+    
 const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImg");
 const closeModal = document.getElementById("closeModal");
@@ -89,4 +91,6 @@ document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") {
         closeImageModal();
     }
+});
+
 });
