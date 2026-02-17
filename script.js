@@ -44,9 +44,11 @@ const marqueeTrack = document.getElementById("marqueeTrack");
 
 // Duplicate content until it fills screen
 function fillMarquee() {
-    const text = marqueeTrack.innerHTML;
+    const baseText = "Advertise | ";
+    marqueeTrack.innerHTML = baseText;
+
     while (marqueeTrack.offsetWidth < window.innerWidth * 2) {
-        marqueeTrack.innerHTML += " " + text;
+        marqueeTrack.innerHTML += baseText;
     }
 }
 
@@ -57,30 +59,34 @@ const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImg");
 const closeModal = document.getElementById("closeModal");
 
-// Select all images inside sections
+// Open modal
 document.querySelectorAll(".section img").forEach(img => {
     img.addEventListener("click", function() {
-        modal.style.display = "flex";
+        modal.classList.add("active");
         modalImg.src = this.src;
+        document.body.style.overflow = "hidden"; // Disable scroll
     });
 });
 
+// Close function
+function closeImageModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto"; // Enable scroll
+}
+
 // Close when clicking X
-closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
-});
+closeModal.addEventListener("click", closeImageModal);
 
 // Close when clicking outside image
 modal.addEventListener("click", (e) => {
     if (e.target === modal) {
-        modal.style.display = "none";
+        closeImageModal();
     }
 });
 
-// Close modal using ESC key
+// ESC key
 document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") {
-        modal.style.display = "none";
+        closeImageModal();
     }
 });
-
