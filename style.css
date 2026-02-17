@@ -401,14 +401,18 @@ header {
     animation: scanMove 6s linear infinite;
 }
 
-#introLoader::after {
+.intro-content::before {
     content:"";
     position:absolute;
     width:500px;
     height:500px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     background: radial-gradient(circle, rgba(0,247,255,0.2), transparent 70%);
     filter: blur(80px);
     animation: pulseBg 4s ease-in-out infinite;
+    z-index:-1;
 }
 
 /* center content */
@@ -418,16 +422,20 @@ header {
 }
 
 .intro-logo {
-    width: 320px;   /* BIG logo */
-    margin-bottom: 35px;
+    width: 220px;
+    margin-bottom: 25px;
     filter:
-        drop-shadow(0 0 25px #00f7ff)
-        drop-shadow(0 0 60px #00f7ff);
+        drop-shadow(0 0 20px #00f7ff)
+        drop-shadow(0 0 40px #00f7ff);
 }
 
 .intro-text {
-    font-size: 110px;   /* BIG KENT text */
-    letter-spacing: 24px;
+    font-size: 72px;
+    letter-spacing: 16px;
+    color:#00f7ff;
+    text-shadow:
+        0 0 12px #00f7ff,
+        0 0 30px rgba(0,247,255,.6);
 }
 
 /* glitch effect */
@@ -483,41 +491,10 @@ header {
     to { opacity:1; }
 }
 
-/* scanning line */
-#introLoader::after {
-    content:"";
-    position:absolute;
-    width:100%;
-    height:4px;
-    background: linear-gradient(90deg, transparent, #00f7ff, transparent);
-    box-shadow:0 0 20px #00f7ff;
-    animation: scanLine 2.5s linear infinite;
-}
-
-@keyframes scanLine {
-    from { top:-10%; }
-    to { top:110%; }
-}
-
 /* futuristic border */
 #introLoader {
     border: 2px solid rgba(0,247,255,0.3);
     box-shadow:
         inset 0 0 60px rgba(0,247,255,0.15),
         0 0 40px rgba(0,247,255,0.25);
-}
-
-.fingerprint {
-    width:120px;
-    height:120px;
-    margin:40px auto 0;
-    background:url("image/spyware.png") center/contain no-repeat;
-    opacity:.6;
-    animation:fingerScan 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px #00f7ff);
-}
-
-@keyframes fingerScan {
-    0%,100% { transform: scale(1); opacity:.5; }
-    50% { transform: scale(1.1); opacity:1; }
 }
