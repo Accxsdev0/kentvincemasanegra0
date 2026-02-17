@@ -376,6 +376,31 @@ header {
     overflow: hidden;
 }
 
+#introLoader::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(0,247,255,0.05) 0px,
+            rgba(0,247,255,0.05) 1px,
+            transparent 1px,
+            transparent 40px
+        );
+    animation: scanMove 6s linear infinite;
+}
+
+#introLoader::after {
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background: radial-gradient(circle, rgba(0,247,255,0.2), transparent 70%);
+    filter: blur(80px);
+    animation: pulseBg 4s ease-in-out infinite;
+}
+
 /* center content */
 .intro-content {
     text-align: center;
@@ -383,18 +408,24 @@ header {
 }
 
 .intro-logo {
-    width: 120px;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 15px #00f7ff);
+    width: 200px;
+    margin-bottom: 25px;
+    filter:
+        drop-shadow(0 0 20px #00f7ff)
+        drop-shadow(0 0 40px #00f7ff);
+    animation: logoPulse 2s ease-in-out infinite;
 }
 
 /* KENT text */
 .intro-text {
     font-family: 'Orbitron', sans-serif;
-    font-size: 42px;
-    letter-spacing: 12px;
+    font-size: 72px;
+    letter-spacing: 18px;
     color: #00f7ff;
-    text-shadow: 0 0 15px #00f7ff;
+    text-shadow:
+        0 0 10px #00f7ff,
+        0 0 25px #00f7ff,
+        0 0 50px rgba(0,247,255,0.6);
 }
 
 /* glitch effect */
@@ -403,12 +434,29 @@ header {
 }
 
 @keyframes glitch {
-    0% { transform: translate(0); }
-    25% { transform: translate(2px,-2px); }
-    50% { transform: translate(-2px,2px); }
-    75% { transform: translate(2px,2px); }
-    100% { transform: translate(0); }
+    0% { transform: translate(0); filter:hue-rotate(0deg);}
+    20% { transform: translate(-3px,3px); }
+    40% { transform: translate(3px,-3px); }
+    60% { transform: translate(-2px,-2px); }
+    80% { transform: translate(2px,2px); }
+    100% { transform: translate(0); filter:hue-rotate(20deg);}
 }
+
+@keyframes logoPulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes scanMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(40px); }
+}
+
+@keyframes pulseBg {
+    0%,100% { transform: scale(1); opacity:.6;}
+    50% { transform: scale(1.2); opacity:1;}
+}
+
 
 /* fade intro */
 .intro-hide {
