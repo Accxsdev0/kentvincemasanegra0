@@ -39,3 +39,16 @@ backToTop.addEventListener("click", () => {
         behavior: "smooth"
     });
 });
+
+const marqueeTrack = document.getElementById("marqueeTrack");
+
+// Duplicate content until it fills screen
+function fillMarquee() {
+    const text = marqueeTrack.innerHTML;
+    while (marqueeTrack.offsetWidth < window.innerWidth * 2) {
+        marqueeTrack.innerHTML += " " + text;
+    }
+}
+
+fillMarquee();
+window.addEventListener("resize", fillMarquee);
