@@ -467,25 +467,6 @@ header {
     50% { transform: scale(1.2); opacity:1;}
 }
 
-
-/* fade intro */
-.intro-hide {
-    animation: introExit 1.5s ease forwards;
-}
-
-@keyframes introExit {
-    0% {
-        opacity:1;
-        transform: scale(1);
-    }
-    100% {
-        opacity:0;
-        transform:
-            translateY(-45vh)
-            scale(0.2);
-    }
-}
-
 @keyframes introFadeIn {
     from { opacity:0; }
     to { opacity:1; }
@@ -507,13 +488,14 @@ header {
     grid-template-columns: repeat(8,1fr);
     grid-template-rows: repeat(6,1fr);
     pointer-events:none;
-    z-index:5;
+    z-index:50; /* IMPORTANT */
 }
 
 .break-box{
     opacity:0;
     background:black;
     border:1px solid rgba(0,247,255,0.15);
+    box-shadow: inset 0 0 10px rgba(0,247,255,.2);
 }
 
 /* box appears */
