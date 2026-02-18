@@ -39,7 +39,7 @@ document.querySelectorAll(".side-panel a").forEach(link => {
 
 // Back to top show/hide
 window.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
+    if (window.scrollY > 20) {
         backToTop.style.display = "block";
     } else {
         backToTop.style.display = "none";
@@ -75,11 +75,10 @@ const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImg");
 
 // Open modal
-document.querySelectorAll(".section img, .cover-item, .category-modal").forEach(img => {
+document.querySelectorAll("img:not(.school-logo):not(.footer-hacker-icon)").forEach(img => {
     img.addEventListener("click", function() {
         modalImg.src = this.src;
         modal.classList.add("active");
-        window.scrollTo({top:0, behavior:"instant"});
         document.body.style.overflow = "hidden"; // Disable scroll
     });
 });
@@ -265,4 +264,8 @@ window.addEventListener("scroll", ()=>{
         `0 0 ${20*glow}px rgba(0,247,255,.8)`;
 });
 
-
+document.querySelectorAll(".dc-header").forEach(item=>{
+    item.addEventListener("click",()=>{
+        item.parentElement.classList.toggle("active");
+    });
+});
