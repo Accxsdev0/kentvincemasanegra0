@@ -7,6 +7,23 @@ const sidePanel = document.getElementById("sidePanel");
 const overlay = document.getElementById("overlay");
 const backToTop = document.getElementById("backToTop");
 
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 200) {
+        backToTop.style.display = "block";
+    } else {
+        backToTop.style.display = "none";
+    }
+
+});
+
+backToTop.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
 /* ===== ABOUT ICT DROPDOWN ===== */
 const aboutToggle = document.getElementById("aboutToggle");
 const aboutSub = document.getElementById("aboutSub");
@@ -34,23 +51,6 @@ document.querySelectorAll(".side-panel a").forEach(link => {
     link.addEventListener("click", () => {
         sidePanel.classList.remove("active");
         overlay.classList.remove("active");
-    });
-});
-
-// Back to top show/hide
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 20) {
-        backToTop.style.display = "block";
-    } else {
-        backToTop.style.display = "none";
-    }
-});
-
-// Back to top click
-backToTop.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
     });
 });
 
@@ -191,57 +191,61 @@ function closeIntro(){
 createMatrixBits();
 setTimeout(hackerReveal,600);
 
-
 /* ===== 3D COVERFLOW ===== */
-const coverItems=document.querySelectorAll(".cover-item");
-let coverIndex=0;
 
-function updateCoverflow(){
-    coverItems.forEach(item=>item.className="cover-item");
-
-    const total=coverItems.length;
-
-    coverItems[coverIndex].classList.add("active");
-    coverItems[(coverIndex-1+total)%total].classList.add("left1");
-    coverItems[(coverIndex-2+total)%total].classList.add("left2");
-    coverItems[(coverIndex+1)%total].classList.add("right1");
-    coverItems[(coverIndex+2)%total].classList.add("right2");
-}
-updateCoverflow();
-
-/* wheel rotate */
-const coverflow=document.getElementById("coverflow");
-if(coverflow){
-coverflow.addEventListener("wheel",(e)=>{
-    e.preventDefault();
-
-    if(e.deltaY>0){
-        coverIndex=(coverIndex+1)%coverItems.length;
-    }else{
-        coverIndex=(coverIndex-1+coverItems.length)%coverItems.length;
-    }
-
-    updateCoverflow();
-
-/* ARROWS FIX */
+const coverItems = document.querySelectorAll(".cover-item");
+const coverflow = document.getElementById("coverflow");
 const leftArrow = document.getElementById("coverLeft");
 const rightArrow = document.getElementById("coverRight");
 
-leftArrow.addEventListener("click", ()=>{
-    coverIndex = (coverIndex - 1 + coverItems.length) % coverItems.length;
-    updateCoverflow();
-});
+let coverIndex = 0;
 
-rightArrow.addEventListener("click", ()=>{
-    coverIndex = (coverIndex + 1) % coverItems.length;
-    updateCoverflow();
-});
+function updateCoverflow() {
+    const total = coverItems.length;
 
-    
-},{passive:false});
+    coverItems.forEach(item => {
+        item.className = "cover-item";
+    });
+
+    coverItems[coverIndex].classList.add("active");
+    coverItems[(coverIndex - 1 + total) % total].classList.add("left1");
+    coverItems[(coverIndex - 2 + total) % total].classList.add("left2");
+    coverItems[(coverIndex + 1) % total].classList.add("right1");
+    coverItems[(coverIndex + 2) % total].classList.add("right2");
 }
 
+updateCoverflow();
+
+/* ✅ ARROW CLICK */
+leftArrow.addEventListener("click", () => {
+    coverIndex =
+        (coverIndex - 1 + coverItems.length) % coverItems.length;
+    updateCoverflow();
 });
+
+rightArrow.addEventListener("click", () => {
+    coverIndex =
+        (coverIndex + 1) % coverItems.length;
+    updateCoverflow();
+});
+
+/* ✅ MOUSE WHEEL */
+if (coverflow) {
+    coverflow.addEventListener("wheel", (e) => {
+        e.preventDefault();
+
+        if (e.deltaY > 0) {
+            coverIndex =
+                (coverIndex + 1) % coverItems.length;
+        } else {
+            coverIndex =
+                (coverIndex - 1 + coverItems.length) %
+                coverItems.length;
+        }
+
+        updateCoverflow();
+    }, { passive: false });
+}   
 
 /* USING ICT FOR GOOD animation */
 const goodSection = document.querySelector(".ict-good");
