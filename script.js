@@ -272,3 +272,5 @@ document.querySelectorAll(".dc-header").forEach(item=>{
         item.parentElement.classList.toggle("active");
     });
 });
+    
+}); // ✅ CLOSE window.load EVENT
