@@ -362,33 +362,6 @@ body{
     font-weight:bold;
 }
 
-/* ===== FIXED IMAGE MODAL ===== */
-.image-modal{
-    position:fixed;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,0.92);
-    backdrop-filter:blur(12px);
-    z-index:999999;   /* VERY HIGH */
-    opacity:0;
-    visibility:hidden;
-}
-
-.image-modal.active{
-    opacity:1;
-    visibility:visible;
-}
-
-.image-modal img{
-    max-width:90vw;
-    max-height:90vh;
-    object-fit:contain;
-    border-radius:14px;
-    display:block;
-}
-
 /* BACK TO TOP */
 #backToTop {
     position: fixed;
@@ -1070,5 +1043,10 @@ body{
 
 .dc-item.active .dc-content{
     max-height:200px;
+}
+
+.category-img img,
+.cover-item{
+    cursor:default;
 }
 
