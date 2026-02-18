@@ -529,8 +529,30 @@ header {
 
 /* matrix dissolve */
 .break-destroy{
-    animation: matrixBreak .6s forwards;
+    animation: matrixHole .8s forwards;
+    font-family: monospace;
+    color:#00f7ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    overflow:hidden;
 }
+
+@keyframes matrixHole{
+    0%{
+        background:black;
+        opacity:1;
+    }
+    50%{
+        background:black;
+    }
+    100%{
+        opacity:0;
+        transform:scale(2);
+    }
+}
+
 
 @keyframes matrixBreak{
     0%{
@@ -569,3 +591,109 @@ header {
     }
 }
 
+/* ===== IMAGE SLIDER ===== */
+.image-slider-section{
+    padding:80px 0 40px;
+    text-align:center;
+}
+
+.slider-wrapper{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+}
+
+.slider{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    transition:transform .6s ease;
+}
+
+.slide-img{
+    width:220px;
+    height:300px;
+    object-fit:cover;
+    opacity:.4;
+    transform:scale(.8);
+    transition:.5s ease;
+    cursor:pointer;
+    border-radius:12px;
+}
+
+.slide-img.active{
+    opacity:1;
+    transform:scale(1.2);
+    box-shadow:0 0 25px #00f7ff;
+}
+
+/* arrows */
+.slide-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,.6);
+    border:1px solid #00f7ff;
+    color:#00f7ff;
+    font-size:22px;
+    cursor:pointer;
+    padding:8px 14px;
+}
+
+.slide-btn.left{ left:10px; }
+.slide-btn.right{ right:10px; }
+
+/* dots */
+.slider-dots{
+    margin-top:25px;
+}
+
+.dot{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    margin:0 6px;
+    border-radius:50%;
+    background:#444;
+    transition:.4s;
+}
+
+.dot.active{
+    width:26px;
+    border-radius:8px;
+    background:#00f7ff;
+}
+
+/* ===== ABOUT ICT TITLE ===== */
+.ict-title{
+    text-align:center;
+    margin:80px 0 30px;
+    position:relative;
+}
+
+.ict-title h2{
+    font-family:'Orbitron', sans-serif;
+    font-size:42px;
+    letter-spacing:8px;
+    color:#00f7ff;
+    text-shadow:
+        0 0 10px #00f7ff,
+        0 0 30px rgba(0,247,255,.6);
+    margin:0;
+    animation:titleGlow 3s ease-in-out infinite;
+}
+
+/* glowing line */
+.ict-line{
+    width:220px;
+    height:2px;
+    margin:15px auto 0;
+    background:linear-gradient(90deg,transparent,#00f7ff,transparent);
+    box-shadow:0 0 12px #00f7ff;
+}
+
+@keyframes titleGlow{
+    0%,100%{ text-shadow:0 0 10px #00f7ff; }
+    50%{ text-shadow:0 0 25px #00f7ff,0 0 50px #00f7ff; }
+}
