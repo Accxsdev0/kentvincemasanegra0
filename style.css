@@ -350,9 +350,18 @@ header {
     filter: drop-shadow(0 0 6px rgba(0, 119, 255, 0.7));
 }
 
+.social-title{
+    text-align:center;
+    margin-bottom:10px;
+    color:#00f7ff;
+    font-weight:bold;
+}
+
 /* IMAGE MODAL (IMPROVED) */
 .image-modal{
     position:fixed;
+    top:0;
+    left:0;
     inset:0;
     background:rgba(0,0,0,.9);
     backdrop-filter:blur(10px);
@@ -823,7 +832,7 @@ header {
     display:flex;
     align-items:center;
     gap:50px;
-    margin:10px auto;
+    margin:0px auto;
     max-width:1100px;
 
     /* NEW */
@@ -864,9 +873,9 @@ header {
 }
 
 .category-img img{
-    width:100%;
-    max-width:520px;
-    height:380px;
+    width:auto;
+    max-width:none;
+    height:420px;
     object-fit:cover;
     border-radius:14px;
     cursor:pointer;
@@ -944,4 +953,95 @@ header {
 
 .submenu.open{
     max-height:300px;
+}
+
+.digital-citizen{
+    width:90%;
+    margin:60px auto;
+    color:white;
+}
+
+.dc-title{
+    font-family:'Orbitron',sans-serif;
+    font-size:34px;
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.dc-item{
+    border-top:1px solid rgba(255,255,255,.3);
+    padding:22px 0;
+}
+
+.dc-item:last-child{
+    border-bottom:1px solid rgba(255,255,255,.3);
+}
+
+.dc-item h3{
+    color:#00f7ff;
+    margin-bottom:8px;
+}
+
+.ict-good{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:90%;
+    margin:120px auto;
+    gap:60px;
+}
+
+.good-left h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:70px;
+    line-height:1.1;
+    color:#00f7ff;
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s;
+}
+
+.good-right{
+    max-width:600px;
+    font-size:15px;
+    line-height:1.8;
+}
+
+.good-right p{
+    transition:.3s;
+}
+
+.reflection{
+    display:flex;
+    justify-content:center;
+    margin:100px 0;
+}
+
+.reflection-box{
+    width:70%;
+    padding:40px;
+    border-radius:18px;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
+    text-align:center;
+    box-shadow:0 0 30px rgba(0,247,255,.2);
+}
+
+.reflection-box h2{
+    font-family:'Orbitron';
+    color:#00f7ff;
+}
+
+.reflection-box hr{
+    margin:25px 0;
+    border:1px solid rgba(255,255,255,.2);
+}
+
+.verified-icon{
+    width:26px;
+    margin-top:10px;
+}
+
+.student-label{
+    opacity:.7;
 }
