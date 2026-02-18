@@ -9,7 +9,7 @@ const backToTop = document.getElementById("backToTop");
 
 window.addEventListener("scroll", () => {
 
-    if (window.scrollY > 200) {
+    if (window.scrollY > 20) {
         backToTop.style.display = "block";
     } else {
         backToTop.style.display = "none";
@@ -78,7 +78,7 @@ const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImg");
 
 // Open modal
-document.querySelectorAll("img:not(.school-logo):not(.footer-hacker-icon)").forEach(img => {
+document.querySelectorAll(".category-modal, .cover-item").forEach(img => {
     img.addEventListener("click", function() {
         modalImg.src = this.src;
         modal.classList.add("active");
@@ -184,9 +184,8 @@ function closeIntro(){
     setTimeout(()=>{
         document.body.classList.add("page-reveal");
         introLoader.style.display="none";
-
         document.body.style.overflow = "auto"; // ⭐ ADD THIS
-
+        window.dispatchEvent(new Event("scroll"));
     },900);
 }
 
