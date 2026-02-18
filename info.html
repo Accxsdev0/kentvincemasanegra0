@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Website Technical Documentation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== GLOBAL STYLE ===== */
+body{
+    margin:0;
+    font-family:'Orbitron',sans-serif;
+    background:linear-gradient(135deg,
+        #0049B7,
+        #FF1D58,
+        #F75990,
+        #00DDFF);
+    color:white;
+    line-height:1.7;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+/* TITLE */
+h1{
+    text-align:center;
+    letter-spacing:8px;
+    margin-bottom:40px;
+}
+
+/* GLASS CARD */
+.section{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    border-radius:16px;
+    padding:30px;
+    margin:30px 0;
+    transition:.4s;
+}
+
+.section:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 25px rgba(255,255,255,.25);
+}
+
+h2{
+    color:#FFF685;
+    letter-spacing:3px;
+}
+
+ul{
+    padding-left:20px;
+}
+
+/* ACCORDION */
+.feature{
+    margin-top:15px;
+    border-top:1px solid rgba(255,255,255,.3);
+}
+
+.feature-header{
+    cursor:pointer;
+    padding:15px 0;
+    display:flex;
+    justify-content:space-between;
+    color:#00DDFF;
+}
+
+.feature-content{
+    max-height:0;
+    overflow:hidden;
+    transition:.4s ease;
+    color:#eee;
+}
+
+.feature.active .feature-content{
+    max-height:300px;
+}
+
+/* BACK BUTTON */
+.back{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#FFF685;
+    color:black;
+    padding:10px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>WEBSITE TECHNICAL DOCUMENTATION</h1>
+
+<!-- OVERVIEW -->
+<div class="section">
+<h2>Project Overview</h2>
+<p>
+This website is an interactive Digital Citizenship portfolio developed using
+HTML, CSS, and JavaScript. The project demonstrates modern web development
+principles by combining structured content, advanced visual design, and
+interactive user experience techniques. The goal is to present ICT knowledge,
+personal reflection, and advocacy through immersive digital storytelling.
+</p>
+</div>
+
+<!-- HTML ROLE -->
+<div class="section">
+<h2>Role of HTML (Structure Layer)</h2>
+<ul>
+<li>Defines the logical structure of the website.</li>
+<li>Organizes content into semantic sections such as header, categories, and reflections.</li>
+<li>Creates navigation systems including hamburger menu and sections.</li>
+<li>Provides accessibility and readable document hierarchy.</li>
+</ul>
+
+<p>
+HTML acts as the <b>skeleton</b> of the website, ensuring information is properly
+arranged before styling and interaction are applied.
+</p>
+</div>
+
+<!-- CSS ROLE -->
+<div class="section">
+<h2>Role of CSS (Design & Visual Layer)</h2>
+<ul>
+<li>Implements futuristic gradient color themes.</li>
+<li>Creates glassmorphism containers using blur and transparency.</li>
+<li>Applies glow effects and neon shadows.</li>
+<li>Controls layout responsiveness and spacing.</li>
+<li>Builds 3D transformations for the coverflow slider.</li>
+</ul>
+
+<p>
+CSS transforms the raw HTML structure into a modern visual interface,
+enhancing readability while maintaining strong aesthetic identity.
+</p>
+</div>
+
+<!-- JS ROLE -->
+<div class="section">
+<h2>Role of JavaScript (Interaction Layer)</h2>
+<ul>
+<li>Controls animations and dynamic behavior.</li>
+<li>Handles user interaction such as clicks and scrolling.</li>
+<li>Manages modal systems and navigation logic.</li>
+<li>Triggers animations only when elements appear on screen.</li>
+</ul>
+
+<p>
+JavaScript functions as the <b>brain</b> of the website, allowing the page to
+respond intelligently to user actions.
+</p>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+<h2>Interactive Features Explanation</h2>
+
+<div class="feature">
+<div class="feature-header">Intro Hacker Loading Animation <span>+</span></div>
+<div class="feature-content">
+Simulates a digital system boot sequence using randomized characters that
+gradually reveal the final title. It improves first impression and hides
+loading processes.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Matrix Binary Effect <span>+</span></div>
+<div class="feature-content">
+Animated binary numbers represent computing systems and reinforce the
+digital technology theme of the project.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">3D Coverflow Slider <span>+</span></div>
+<div class="feature-content">
+Images rotate in 3D perspective similar to Apple Coverflow, allowing users
+to explore content interactively.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Modal Image Viewer <span>+</span></div>
+<div class="feature-content">
+Clicking an image opens a fullscreen preview, allowing focused viewing
+without leaving the page.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Digital Citizen Accordion <span>+</span></div>
+<div class="feature-content">
+Expandable sections organize information efficiently, reducing scrolling
+and improving readability.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Scroll Triggered Animations <span>+</span></div>
+<div class="feature-content">
+Animations activate only when sections enter the viewport, making the
+experience dynamic and engaging.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Back‑to‑Top Smart Button <span>+</span></div>
+<div class="feature-content">
+Appears automatically during scrolling to improve navigation efficiency
+on long pages.
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-header">Dynamic Marquee System <span>+</span></div>
+<div class="feature-content">
+Scrolling text automatically fills any screen width, ensuring consistent
+visual presentation across devices.
+</div>
+</div>
+
+</div>
+
+<!-- PURPOSE -->
+<div class="section">
+<h2>Project Purpose</h2>
+<p>
+The project demonstrates responsible digital citizenship while showcasing
+technical creativity and modern web development skills. It integrates
+design, interaction, and storytelling to communicate ICT concepts in an
+engaging and professional manner.
+</p>
+</div>
+
+</div>
+
+<div class="back" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+↑ TOP
+</div>
+
+<script>
+
+/* ACCORDION SYSTEM */
+document.querySelectorAll(".feature-header").forEach(header=>{
+    header.addEventListener("click",()=>{
+        header.parentElement.classList.toggle("active");
+    });
+});
+
+</script>
+
+</body>
+</html>
