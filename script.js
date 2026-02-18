@@ -95,83 +95,73 @@ document.addEventListener("keydown", function(e) {
 
 });
 
-/* ================= INTRO ANIMATION ================= */
+/* ================= START AFTER PAGE LOAD ================= */
+window.addEventListener("load", () => {
 
 const introLoader = document.getElementById("introLoader");
 const introText = document.getElementById("introText");
-const finalText = "KENT";
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@";
-let revealIndex = 0;
 
-function hackerReveal() {
-
-    let iterations = 0;
-
-    const interval = setInterval(() => {
-
-        introText.textContent = finalText
-            .split("")
-            .map((letter, index) => {
-
-                if (index < revealIndex) {
-                    return finalText[index];
-                }
-
-                return chars[Math.floor(Math.random() * chars.length)];
-            })
-            .join("");
-
-        iterations++;
-
-        if (iterations > 10) {
-            revealIndex++;
-            iterations = 0;
-        }
-
-        if (revealIndex >= finalText.length) {
-            introText.textContent = finalText;
-            clearInterval(interval);
-
-            setTimeout(() => {
-                closeIntro();
-            }, 400);
-         }
-    }, 60);
-}
-
-/* ===== MATRIX BACKGROUND ===== */
+/* ===== MATRIX RANDOM 0/1 ===== */
 function createMatrixBits(){
-
-    const intro = document.getElementById("introLoader");
 
     setInterval(()=>{
 
         const bit = document.createElement("span");
         bit.textContent = Math.random() > 0.5 ? "1" : "0";
 
-        bit.style.position = "absolute";
-        bit.style.left = Math.random()*100 + "%";
-        bit.style.top = Math.random()*100 + "%";
-        bit.style.color = "#00f7ff";
-        bit.style.fontFamily = "monospace";
-        bit.style.fontSize = (10 + Math.random()*18)+"px";
-        bit.style.opacity = Math.random();
-        bit.style.pointerEvents = "none";
-        bit.style.transition = "opacity 1s linear";
+        bit.style.position="absolute";
+        bit.style.left=Math.random()*100+"%";
+        bit.style.top=Math.random()*100+"%";
+        bit.style.color="#00f7ff";
+        bit.style.fontFamily="monospace";
+        bit.style.fontSize=(10+Math.random()*18)+"px";
+        bit.style.opacity=Math.random();
+        bit.style.pointerEvents="none";
+        bit.style.transition="opacity 1s linear";
 
-        intro.appendChild(bit);
+        introLoader.appendChild(bit);
 
-        setTimeout(()=>{
-            bit.style.opacity = "0";
-        },700);
-
-        setTimeout(()=>{
-            bit.remove();
-        },1700);
+        setTimeout(()=> bit.style.opacity="0",700);
+        setTimeout(()=> bit.remove(),1700);
 
     },80);
 }
 
+/* ===== HACKER TEXT ===== */
+const finalText="KENT";
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@";
+let revealIndex=0;
+
+function hackerReveal(){
+
+    let iterations=0;
+
+    const interval=setInterval(()=>{
+
+        introText.textContent=finalText
+        .split("")
+        .map((letter,index)=>{
+            if(index<revealIndex) return finalText[index];
+            return chars[Math.floor(Math.random()*chars.length)];
+        }).join("");
+
+        iterations++;
+
+        if(iterations>10){
+            revealIndex++;
+            iterations=0;
+        }
+
+        if(revealIndex>=finalText.length){
+            clearInterval(interval);
+            introText.textContent=finalText;
+            setTimeout(closeIntro,500);
+        }
+
+    },60);
+}
+
+/* ===== CLOSE INTRO ===== */
 function closeIntro(){
     introLoader.style.transition="1.5s ease";
     introLoader.style.filter="blur(25px)";
@@ -183,61 +173,42 @@ function closeIntro(){
     },1500);
 }
 
-/* ⭐ START INTRO ANIMATION */
-window.addEventListener("load", () => {
-    createMatrixBits();   // ⭐ matrix rain
-    setTimeout(hackerReveal, 600);
-});
+/* START EFFECTS */
+createMatrixBits();
+setTimeout(hackerReveal,600);
+
 
 /* ===== 3D COVERFLOW ===== */
-
-const coverItems = document.querySelectorAll(".cover-item");
-let coverIndex = 0;
+const coverItems=document.querySelectorAll(".cover-item");
+let coverIndex=0;
 
 function updateCoverflow(){
+    coverItems.forEach(item=>item.className="cover-item");
 
-    coverItems.forEach(item=>{
-        item.className="cover-item";
-    });
-
-    const total = coverItems.length;
+    const total=coverItems.length;
 
     coverItems[coverIndex].classList.add("active");
-
     coverItems[(coverIndex-1+total)%total].classList.add("left1");
     coverItems[(coverIndex-2+total)%total].classList.add("left2");
-
     coverItems[(coverIndex+1)%total].classList.add("right1");
     coverItems[(coverIndex+2)%total].classList.add("right2");
 }
-
 updateCoverflow();
 
-/* arrows via keyboard */
-document.addEventListener("keydown",(e)=>{
-    if(e.key==="ArrowRight"){
-        coverIndex=(coverIndex+1)%coverItems.length;
-        updateCoverflow();
-    }
-    if(e.key==="ArrowLeft"){
-        coverIndex=(coverIndex-1+coverItems.length)%coverItems.length;
-        updateCoverflow();
-    }
-});
-
-const coverflowEl = document.getElementById("coverflow");
-if(coverflowEl){
-
-/* mouse wheel rotate */
-document.getElementById("coverflow")
-.addEventListener("wheel",(e)=>{
-    e.preventDefault();   // ⭐ STOP PAGE SCROLL
+/* wheel rotate */
+const coverflow=document.getElementById("coverflow");
+if(coverflow){
+coverflow.addEventListener("wheel",(e)=>{
+    e.preventDefault();
 
     if(e.deltaY>0){
         coverIndex=(coverIndex+1)%coverItems.length;
     }else{
         coverIndex=(coverIndex-1+coverItems.length)%coverItems.length;
     }
+
     updateCoverflow();
-},{ passive:false });
+},{passive:false});
 }
+
+});
