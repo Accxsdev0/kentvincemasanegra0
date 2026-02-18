@@ -44,9 +44,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    z-index: 999997;
+    z-index: 999999;
     border-bottom: 1px solid #222;
-    transform: translateZ(0); /* ⭐ FORCE GPU FIX */
 }
 
 /* RIGHT HEADER GROUP */
