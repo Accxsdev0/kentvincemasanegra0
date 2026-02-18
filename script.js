@@ -54,10 +54,15 @@ document.querySelectorAll(".side-panel a").forEach(link => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    
 const marqueeTrack = document.getElementById("marqueeTrack");
 
 // Duplicate content until it fills screen
 function fillMarquee() {
+
+    if(!marqueeTrack) return; // ⭐ prevents JS crash
+
     const baseText = "Develop • Design • Deploy • ";
     marqueeTrack.innerHTML = baseText;
 
@@ -68,8 +73,6 @@ function fillMarquee() {
 
 fillMarquee();
 window.addEventListener("resize", fillMarquee);
-
-document.addEventListener("DOMContentLoaded", function() {
     
 const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImg");
