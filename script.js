@@ -168,9 +168,9 @@ function closeIntro(){
     introLoader.style.opacity="0";
 
     setTimeout(()=>{
-        introLoader.style.display="none";
         document.body.classList.add("page-reveal");
-    },1500);
+        introLoader.style.display="none";
+    },900);
 }
 
 /* START EFFECTS */
@@ -212,3 +212,13 @@ coverflow.addEventListener("wheel",(e)=>{
 }
 
 });
+
+document.getElementById("coverLeft").onclick=()=>{
+    coverIndex=(coverIndex-1+coverItems.length)%coverItems.length;
+    updateCoverflow();
+};
+
+document.getElementById("coverRight").onclick=()=>{
+    coverIndex=(coverIndex+1)%coverItems.length;
+    updateCoverflow();
+};
