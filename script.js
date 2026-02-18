@@ -1,25 +1,39 @@
+window.onbeforeunload = function () {
+    window.scrollTo(0,0);
+};
+
 const hamburger = document.getElementById("hamburger");
 const sidePanel = document.getElementById("sidePanel");
 const overlay = document.getElementById("overlay");
 const backToTop = document.getElementById("backToTop");
 
+/* ===== ABOUT ICT DROPDOWN ===== */
+const aboutToggle = document.getElementById("aboutToggle");
+const aboutSub = document.getElementById("aboutSub");
+
+if(aboutToggle && aboutSub){
+    aboutToggle.addEventListener("click", () => {
+        aboutSub.classList.toggle("open");
+    });
+}
+
 // Open panel
 hamburger.addEventListener("click", () => {
-    sidePanel.style.right = "0";
-    overlay.style.display = "block";
+    sidePanel.classList.add("active");
+    overlay.classList.add("active");
 });
 
 // Close panel when clicking overlay
 overlay.addEventListener("click", () => {
-    sidePanel.style.right = "-250px";
-    overlay.style.display = "none";
+    sidePanel.classList.remove("active");
+    overlay.classList.remove("active");
 });
 
 // Close panel when clicking menu link
 document.querySelectorAll(".side-panel a").forEach(link => {
     link.addEventListener("click", () => {
-        sidePanel.style.right = "-250px";
-        overlay.style.display = "none";
+        sidePanel.classList.remove("active");
+        overlay.classList.remove("active");
     });
 });
 
@@ -62,10 +76,10 @@ const modalImg = document.getElementById("modalImg");
 const closeModal = document.getElementById("closeModal");
 
 // Open modal
-document.querySelectorAll(".section img, .cover-item").forEach(img => {
+document.querySelectorAll(".section img, .cover-item, .category-modal").forEach(img => {
     img.addEventListener("click", function() {
-        modal.classList.add("active");
         modalImg.src = this.src;
+        modal.classList.add("active");
         document.body.style.overflow = "hidden"; // Disable scroll
     });
 });
@@ -97,6 +111,7 @@ document.addEventListener("keydown", function(e) {
 
 /* ================= START AFTER PAGE LOAD ================= */
 window.addEventListener("load", () => {
+document.body.style.overflow = "hidden";
 
 const introLoader = document.getElementById("introLoader");
 const introText = document.getElementById("introText");
@@ -170,6 +185,9 @@ function closeIntro(){
     setTimeout(()=>{
         document.body.classList.add("page-reveal");
         introLoader.style.display="none";
+
+        document.body.style.overflow = "auto"; // ⭐ ADD THIS
+
     },900);
 }
 
@@ -213,12 +231,20 @@ coverflow.addEventListener("wheel",(e)=>{
 
 });
 
-document.getElementById("coverLeft").onclick=()=>{
-    coverIndex=(coverIndex-1+coverItems.length)%coverItems.length;
-    updateCoverflow();
-};
+const leftArrow = document.getElementById("coverLeft");
+const rightArrow = document.getElementById("coverRight");
 
-document.getElementById("coverRight").onclick=()=>{
-    coverIndex=(coverIndex+1)%coverItems.length;
-    updateCoverflow();
-};
+if(leftArrow && rightArrow){
+
+    leftArrow.addEventListener("click", ()=>{
+        coverIndex = (coverIndex - 1 + coverItems.length) % coverItems.length;
+        updateCoverflow();
+    });
+
+    rightArrow.addEventListener("click", ()=>{
+        coverIndex = (coverIndex + 1) % coverItems.length;
+        updateCoverflow();
+    });
+
+}
+
