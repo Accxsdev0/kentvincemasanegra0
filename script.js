@@ -3,13 +3,21 @@ const sidePanel = document.getElementById("sidePanel");
 const overlay = document.getElementById("overlay");
 const backToTop = document.getElementById("backToTop");
 
-window.addEventListener("scroll", () => {
+function toggleBackToTop(){
     const scrollPos =
         window.pageYOffset || document.documentElement.scrollTop;
 
-    backToTop.style.display =
-        scrollPos > 20 ? "block" : "none";
-});
+    if(scrollPos > 50){
+        backToTop.style.opacity = "1";
+        backToTop.style.pointerEvents = "auto";
+    }else{
+        backToTop.style.opacity = "0";
+        backToTop.style.pointerEvents = "none";
+    }
+}
+
+window.addEventListener("scroll", toggleBackToTop);
+window.addEventListener("load", toggleBackToTop);
 
 backToTop.addEventListener("click", () => {
     window.scrollTo({
@@ -86,6 +94,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
 /* ================= START AFTER PAGE LOAD ================= */
 window.addEventListener("load", () => {
+document.body.classList.add("loading");
 document.body.style.overflow = "hidden";
 
 const introLoader = document.getElementById("introLoader");
@@ -158,9 +167,10 @@ function closeIntro(){
     introLoader.style.opacity="0";
 
     setTimeout(()=>{
-        document.body.classList.add("page-reveal");
-        introLoader.style.display="none";
-        document.body.style.overflow = "auto"; // ⭐ ADD THIS
+        document.body.classList.remove("loading");
+	document.body.classList.add("page-reveal");
+	introLoader.style.display="none";
+	document.body.style.overflow = "auto";
         window.dispatchEvent(new Event("scroll"));
     },900);
 }
