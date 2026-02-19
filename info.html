@@ -3,269 +3,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Website Technical Documentation</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- ✅ FAVICON -->
+<link rel="icon" type="image/png" href="image/kentlogo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===== GLOBAL STYLE ===== */
+/* ===== GLOBAL ===== */
 body{
     margin:0;
-    font-family:'Orbitron',sans-serif;
-    background:linear-gradient(135deg,
-        #0049B7,
-        #FF1D58,
-        #F75990,
-        #00DDFF);
-    color:white;
-    line-height:1.7;
+    font-family:'Inter',sans-serif;
+    background:#0f1115;
+    color:#e4e6eb;
+    line-height:1.8;
 }
 
-/* CONTAINER */
+/* ===== HEADER ===== */
+header{
+    position:sticky;
+    top:0;
+    background:#12141a;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #23262f;
+    z-index:1000;
+}
+
+/* Logo */
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+    height:40px;
+}
+
+.logo span{
+    font-weight:700;
+    font-size:18px;
+    color:#ffffff;
+}
+
+/* Back Button */
+.back-btn{
+    background:#4da3ff;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#357dd8;
+    transform:translateY(-2px);
+}
+
+/* ===== CONTAINER ===== */
 .container{
     max-width:1100px;
     margin:auto;
-    padding:40px 20px;
+    padding:60px 25px;
 }
 
 /* TITLE */
 h1{
     text-align:center;
-    letter-spacing:8px;
-    margin-bottom:40px;
+    font-weight:800;
+    font-size:40px;
+    margin-bottom:60px;
+    color:#ffffff;
 }
 
-/* GLASS CARD */
+/* SECTION */
 .section{
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-    border-radius:16px;
-    padding:30px;
-    margin:30px 0;
-    transition:.4s;
+    background:#171a21;
+    border-radius:14px;
+    padding:35px;
+    margin-bottom:35px;
+    border:1px solid #23262f;
+    transition:.3s;
 }
 
 .section:hover{
-    transform:translateY(-6px);
-    box-shadow:0 0 25px rgba(255,255,255,.25);
+    border-color:#3a3f4b;
 }
 
 h2{
-    color:#FFF685;
-    letter-spacing:3px;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:20px;
+    color:#ffffff;
+}
+
+p{
+    color:#c7c9ce;
 }
 
 ul{
     padding-left:20px;
 }
 
-/* ACCORDION */
+li{
+    margin-bottom:8px;
+}
+
+/* ===== ACCORDION ===== */
 .feature{
-    margin-top:15px;
-    border-top:1px solid rgba(255,255,255,.3);
+    border-top:1px solid #2a2f3a;
 }
 
 .feature-header{
     cursor:pointer;
-    padding:15px 0;
+    padding:18px 0;
     display:flex;
     justify-content:space-between;
-    color:#00DDFF;
+    align-items:center;
+    font-weight:600;
+    color:#ffffff;
+    transition:.3s;
+}
+
+.feature-header:hover{
+    color:#4da3ff;
+}
+
+.feature-header span{
+    font-size:20px;
+    transition:transform .3s ease;
 }
 
 .feature-content{
     max-height:0;
     overflow:hidden;
-    transition:.4s ease;
-    color:#eee;
+    transition:max-height .4s ease, opacity .3s ease;
+    opacity:0;
+    color:#bfc3cc;
 }
 
 .feature.active .feature-content{
     max-height:300px;
+    opacity:1;
 }
 
-/* BACK BUTTON */
-.back{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    background:#FFF685;
-    color:black;
-    padding:10px 18px;
-    border-radius:30px;
-    cursor:pointer;
-    font-weight:bold;
+.feature.active .feature-header span{
+    transform:rotate(45deg);
 }
 
 </style>
 </head>
-
 <body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="logo">
+        <img src="image/kentlogo.png" alt="Kent Logo">
+        <span>KENT PORTFOLIO</span>
+    </div>
+
+    <!-- Change index.html to your main page filename -->
+    <a href="index.html" class="back-btn">← Back to Main</a>
+</header>
 
 <div class="container">
 
 <h1>WEBSITE TECHNICAL DOCUMENTATION</h1>
 
-<!-- OVERVIEW -->
+<!-- ================= OVERVIEW ================= -->
 <div class="section">
 <h2>Project Overview</h2>
 <p>
-This website is an interactive Digital Citizenship portfolio developed using
-HTML, CSS, and JavaScript. The project demonstrates modern web development
-principles by combining structured content, advanced visual design, and
-interactive user experience techniques. The goal is to present ICT knowledge,
-personal reflection, and advocacy through immersive digital storytelling.
+This website is a fully interactive Digital Citizenship portfolio designed and developed using 
+HTML, CSS, and JavaScript. The project integrates structural web architecture, advanced visual 
+design systems, and dynamic interaction logic to produce a modern and immersive user experience. 
+Rather than functioning as a static webpage, this portfolio operates as a responsive digital system 
+where layout, animation, and behavior work together cohesively. The website demonstrates both 
+technical development capability and responsible digital advocacy, presenting ICT knowledge, 
+cyber‑ethics awareness, and creative storytelling through carefully structured interface components.
+</p>
+
+<p>
+The architecture follows a layered approach: HTML establishes semantic structure, CSS enhances 
+visual identity and layout responsiveness, and JavaScript introduces interactivity and dynamic 
+behavior. Each layer is intentionally designed to complement the others, ensuring both aesthetic 
+coherence and functional reliability.
 </p>
 </div>
 
-<!-- HTML ROLE -->
+<!-- ================= HTML ================= -->
 <div class="section">
-<h2>Role of HTML (Structure Layer)</h2>
+<h2>Role of HTML (Structural Foundation Layer)</h2>
+
+<p>
+HTML serves as the foundational framework of the website. It defines document hierarchy, organizes 
+content into meaningful sections, and ensures logical navigation flow. Semantic elements are used 
+to create accessible and well-structured content that can be interpreted efficiently by browsers 
+and assistive technologies.
+</p>
+
 <ul>
-<li>Defines the logical structure of the website.</li>
-<li>Organizes content into semantic sections such as header, categories, and reflections.</li>
-<li>Creates navigation systems including hamburger menu and sections.</li>
-<li>Provides accessibility and readable document hierarchy.</li>
+<li>Implements semantic grouping of sections (header, content blocks, feature explanations).</li>
+<li>Defines navigation anchors and internal linking systems.</li>
+<li>Structures accordion modules and interactive containers.</li>
+<li>Supports accessibility and search engine readability.</li>
+<li>Provides a scalable structure for future feature expansion.</li>
 </ul>
 
 <p>
-HTML acts as the <b>skeleton</b> of the website, ensuring information is properly
-arranged before styling and interaction are applied.
+Without HTML, visual styling and scripting logic would have no structural reference. It functions 
+as the skeleton upon which all design and interaction layers are constructed.
 </p>
 </div>
 
-<!-- CSS ROLE -->
+<!-- ================= CSS ================= -->
 <div class="section">
-<h2>Role of CSS (Design & Visual Layer)</h2>
+<h2>Role of CSS (Visual & Experience Layer)</h2>
+
+<p>
+CSS transforms structural content into a visually refined and user-friendly interface. The design 
+strategy emphasizes readability, professional aesthetics, and subtle interactive feedback. Rather 
+than overusing decorative effects, the styling prioritizes contrast balance, spacing precision, 
+and consistent visual rhythm.
+</p>
+
 <ul>
-<li>Implements futuristic gradient color themes.</li>
-<li>Creates glassmorphism containers using blur and transparency.</li>
-<li>Applies glow effects and neon shadows.</li>
-<li>Controls layout responsiveness and spacing.</li>
-<li>Builds 3D transformations for the coverflow slider.</li>
+<li>Implements dark theme for improved contrast and reduced eye strain.</li>
+<li>Creates modern card-style sections with layered depth.</li>
+<li>Applies hover transitions for interactive clarity.</li>
+<li>Ensures responsive spacing across different screen sizes.</li>
+<li>Controls animation timing and smooth transitions.</li>
+<li>Maintains consistent typography hierarchy.</li>
 </ul>
 
 <p>
-CSS transforms the raw HTML structure into a modern visual interface,
-enhancing readability while maintaining strong aesthetic identity.
+CSS not only enhances visual appeal but also guides user attention. Through spacing, hierarchy, 
+and color discipline, the interface remains professional, structured, and readable.
 </p>
 </div>
 
-<!-- JS ROLE -->
+<!-- ================= JAVASCRIPT ================= -->
 <div class="section">
-<h2>Role of JavaScript (Interaction Layer)</h2>
+<h2>Role of JavaScript (Behavior & Logic Layer)</h2>
+
+<p>
+JavaScript functions as the behavioral engine of the website. It enables dynamic user interaction, 
+controls animations, manages system states, and responds to real-time events such as scrolling 
+and clicking. The scripting layer ensures that the website is not static but responsive and 
+intelligent.
+</p>
+
 <ul>
-<li>Controls animations and dynamic behavior.</li>
-<li>Handles user interaction such as clicks and scrolling.</li>
-<li>Manages modal systems and navigation logic.</li>
-<li>Triggers animations only when elements appear on screen.</li>
+<li>Controls interactive accordion modules.</li>
+<li>Handles navigation and smooth scrolling behavior.</li>
+<li>Manages intro animation sequence and loading state.</li>
+<li>Activates animations based on viewport detection.</li>
+<li>Maintains UI state consistency during transitions.</li>
+<li>Improves usability through conditional logic.</li>
 </ul>
 
 <p>
-JavaScript functions as the <b>brain</b> of the website, allowing the page to
-respond intelligently to user actions.
+JavaScript enhances engagement by allowing the page to respond contextually to user behavior, 
+making the experience immersive rather than passive.
 </p>
 </div>
 
-<!-- FEATURES -->
+<!-- ================= INTERACTIVE FEATURES ================= -->
 <div class="section">
-<h2>Interactive Features Explanation</h2>
+<h2>Interactive Features (Detailed System Explanation)</h2>
 
 <div class="feature">
 <div class="feature-header">Intro Hacker Loading Animation <span>+</span></div>
 <div class="feature-content">
-Simulates a digital system boot sequence using randomized characters that
-gradually reveal the final title. It improves first impression and hides
-loading processes.
+This feature simulates a digital boot sequence using randomized character cycling that gradually 
+reveals the final system name. It creates a cinematic first impression while masking page loading 
+processes. The animation is controlled using interval-based text mutation and controlled reveal 
+logic, producing a dynamic “hacker-style” introduction. It establishes thematic identity and 
+immediately communicates a technology-focused environment.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">Matrix Binary Effect <span>+</span></div>
+<div class="feature-header">Matrix Binary Visual Effect <span>+</span></div>
 <div class="feature-content">
-Animated binary numbers represent computing systems and reinforce the
-digital technology theme of the project.
+Randomized binary elements are generated dynamically and positioned across the intro screen to 
+symbolize digital data flow. Each element fades out gradually to simulate streaming data. This 
+effect reinforces the ICT theme and visually represents computation and system processing.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">3D Coverflow Slider <span>+</span></div>
+<div class="feature-header">3D Coverflow Slider System <span>+</span></div>
 <div class="feature-content">
-Images rotate in 3D perspective similar to Apple Coverflow, allowing users
-to explore content interactively.
+The coverflow slider uses CSS 3D transformations and dynamic class reassignment to position 
+images in layered perspective. Navigation is supported by arrow controls and mouse wheel input, 
+creating intuitive browsing. This feature enhances visual storytelling while maintaining 
+structured spatial alignment.
 </div>
 </div>
 
 <div class="feature">
 <div class="feature-header">Modal Image Viewer <span>+</span></div>
 <div class="feature-content">
-Clicking an image opens a fullscreen preview, allowing focused viewing
-without leaving the page.
+The modal system allows images to expand into a focused overlay view without redirecting the 
+user to another page. It improves content clarity and keeps the browsing experience seamless 
+by isolating selected media in a controlled environment.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">Digital Citizen Accordion <span>+</span></div>
+<div class="feature-header">Digital Citizen Accordion System <span>+</span></div>
 <div class="feature-content">
-Expandable sections organize information efficiently, reducing scrolling
-and improving readability.
+The accordion component organizes extensive textual content into collapsible modules. This 
+reduces scrolling fatigue and enhances readability. Smooth height transitions and icon rotation 
+provide visual feedback, reinforcing state changes clearly and professionally.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">Scroll Triggered Animations <span>+</span></div>
+<div class="feature-header">Scroll-Triggered Animation Logic <span>+</span></div>
 <div class="feature-content">
-Animations activate only when sections enter the viewport, making the
-experience dynamic and engaging.
+Animations are activated only when sections enter the viewport. This improves performance and 
+creates a dynamic reveal experience. It prevents unnecessary animation processing and enhances 
+user engagement through controlled motion timing.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">Back‑to‑Top Smart Button <span>+</span></div>
+<div class="feature-header">Back-to-Top Smart Navigation <span>+</span></div>
 <div class="feature-content">
-Appears automatically during scrolling to improve navigation efficiency
-on long pages.
+This adaptive navigation feature appears only when the user scrolls beyond a defined threshold. 
+It improves usability for long-form content and ensures smooth return to the top of the page 
+without abrupt repositioning.
 </div>
 </div>
 
 <div class="feature">
-<div class="feature-header">Dynamic Marquee System <span>+</span></div>
+<div class="feature-header">Dynamic Marquee Expansion System <span>+</span></div>
 <div class="feature-content">
-Scrolling text automatically fills any screen width, ensuring consistent
-visual presentation across devices.
+The marquee automatically duplicates content until it exceeds the viewport width, ensuring 
+continuous horizontal flow across different screen sizes. This guarantees consistent visual 
+density and layout stability.
 </div>
 </div>
 
 </div>
 
-<!-- PURPOSE -->
+<!-- ================= PURPOSE ================= -->
 <div class="section">
-<h2>Project Purpose</h2>
+<h2>Project Purpose & Digital Advocacy Mission</h2>
+
 <p>
-The project demonstrates responsible digital citizenship while showcasing
-technical creativity and modern web development skills. It integrates
-design, interaction, and storytelling to communicate ICT concepts in an
-engaging and professional manner.
+The purpose of this project extends beyond technical demonstration. It aims to promote responsible 
+digital citizenship by encouraging ethical ICT use, respectful online communication, and awareness 
+of cyber-related issues such as cyberbullying. By combining interactive design with meaningful 
+content, the website becomes both a technical portfolio and an advocacy platform.
 </p>
-</div>
+
+<p>
+Through this integrated approach, the project showcases creativity, structured development, 
+and a strong understanding of modern web systems while reinforcing positive digital behavior.
+</p>
 
 </div>
 
-<div class="back" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-↑ TOP
 </div>
 
 <script>
-
-/* ACCORDION SYSTEM */
 document.querySelectorAll(".feature-header").forEach(header=>{
     header.addEventListener("click",()=>{
         header.parentElement.classList.toggle("active");
     });
 });
-
 </script>
 
 </body>
