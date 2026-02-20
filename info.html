@@ -55,21 +55,29 @@ header{
     display:inline-flex;
     align-items:center;
     gap:8px;
-    background:linear-gradient(135deg,#4da3ff,#357dd8);
-    color:#fff;
-    padding:10px 22px;
+    padding:9px 20px;
     border-radius:50px;
     text-decoration:none;
     font-weight:600;
     font-size:14px;
     letter-spacing:.5px;
-    transition:.3s ease;
-    box-shadow:0 4px 15px rgba(77,163,255,.3);
+
+    /* Bubble Style */
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.15);
+    color:#ffffff;
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    transition:all .3s ease;
 }
 
 .back-btn:hover{
+    background:rgba(77,163,255,0.15);
+    border:1px solid rgba(77,163,255,0.4);
     transform:translateY(-3px);
-    box-shadow:0 8px 25px rgba(77,163,255,.5);
+    box-shadow:0 6px 20px rgba(77,163,255,0.25);
 }
 
 /* ===== CONTAINER ===== */
