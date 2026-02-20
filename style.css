@@ -1089,13 +1089,7 @@ header {
     cursor:default;
 }
 
-/* DESKTOP DEFAULT */
-.side-panel{
-    display: none;
-}
-
 /* ================= RESPONSIVE DESIGN ================= */
-
 /* TABLETS */
 @media (max-width: 1024px){
 
@@ -1128,7 +1122,6 @@ header {
         justify-content: center;
     }
 }
-
 
 /* MOBILE PHONES */
 @media (max-width: 768px){
