@@ -326,4 +326,9 @@ if(reflectionModal){
     });
 }
 
+    // Always scroll to top on refresh
+window.addEventListener("beforeunload", function () {
+    window.scrollTo(0, 0);
+});
+    
 }); // ✅ CLOSE window.load EVENT
