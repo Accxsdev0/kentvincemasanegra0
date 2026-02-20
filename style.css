@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+img{
+    max-width: 100%;
+    height: auto;
+}
+
 /* GLOBAL FUTURISTIC FONT */
 body {
     margin: 0;
@@ -763,12 +768,10 @@ body{
 /* ===== CATEGORY GLASS CONTAINER ===== */
 .category-row{
     display:flex;
-    align-items:center;
+    align-items:stretch;
     gap:50px;
     margin:0px auto;
     max-width:1100px;
-
-    /* NEW */
     padding:35px;
     border-radius:18px;
     background:rgba(255,255,255,0.03);
@@ -808,11 +811,12 @@ body{
 .category-img{
     position:relative;
     z-index:10;
+    flex:0 0 auto;
 }
 .category-img img{
     width:auto;
+    height:250px;
     max-width:none;
-    height:420px;
     object-fit:cover;
     border-radius:14px;
     cursor:pointer;
@@ -856,6 +860,10 @@ body{
 
 .category-text{
     text-align:justify;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    flex:1;
 }
 
 .category-text h3{
@@ -1045,4 +1053,144 @@ body{
 .category-img img,
 .cover-item{
     cursor:default;
+}
+
+/* DESKTOP DEFAULT */
+.side-panel{
+    display: none;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* TABLETS */
+@media (max-width: 1024px){
+
+    .section{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .category-row{
+        flex-direction: column !important;
+        text-align: center;
+    }
+
+    .ict-good{
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .good-left h1{
+        font-size: 60px;
+    }
+
+    .reflection-box{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .reflection-right{
+        justify-content: center;
+    }
+}
+
+
+/* MOBILE PHONES */
+@media (max-width: 768px){
+
+    body{
+        padding-top: 70px;
+    }
+
+    header{
+        padding: 10px 20px;
+    }
+
+    .logo-area h2{
+        font-size: 18px;
+    }
+
+    .section{
+        padding: 40px 15px;
+        gap: 20px;
+    }
+
+    .section h3{
+        font-size: 18px;
+    }
+
+    .section p{
+        font-size: 14px;
+    }
+
+    .coverflow{
+        height: 250px;
+    }
+
+    .cover-item{
+        width: 160px;
+        height: 220px;
+    }
+
+    .ict-title h2{
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+
+    .good-left h1{
+        font-size: 40px;
+    }
+
+    .good-right{
+        font-size: 14px;
+    }
+
+    .reflection-box{
+        padding: 20px;
+    }
+
+    .reflection-left{
+        font-size: 13px;
+    }
+
+    .footer-inner{
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    /* Show hamburger on mobile */
+    .hamburger{
+        display: block;
+    }
+
+    /* Enable side panel on mobile */
+    .side-panel{
+        display: flex;
+        right: -70%;      /* hide properly */
+        width: 60%;       /* smaller width */
+        max-width: 240px; /* limit size */
+    }
+
+    .side-panel.active{
+        right: 0;
+    }
+
+    #category1 img,
+    #category2 img,
+    #category3 img,
+    #category4 img,
+    #category5 img{
+        height: auto;
+        max-width: 100%;
+    }
+
+}
+
+@media (max-width: 480px){
+    .good-left h1{
+        font-size: 28px;
+        line-height: 1.2;
+    }
 }
