@@ -294,4 +294,24 @@ function preventScroll(e){
     }
 }
 
+/* ===== REFLECTION MODAL ===== */
+const reflectionAvatar = document.querySelector(".reflection-avatar");
+const reflectionModal = document.getElementById("reflectionModal");
+const modalImage = document.getElementById("modalImage");
+
+if(reflectionAvatar){
+    reflectionAvatar.addEventListener("click", ()=>{
+        modalImage.src = reflectionAvatar.src;
+        reflectionModal.classList.add("active");
+    });
+}
+
+if(reflectionModal){
+    reflectionModal.addEventListener("click", (e)=>{
+        if(e.target === reflectionModal){
+            reflectionModal.classList.remove("active");
+        }
+    });
+}
+
 }); // ✅ CLOSE window.load EVENT
