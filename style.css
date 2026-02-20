@@ -1154,12 +1154,6 @@ body{
         font-size: 13px;
     }
 
-    .footer-inner{
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
     /* Show hamburger on mobile */
     .hamburger{
         display: block;
@@ -1185,6 +1179,55 @@ body{
         height: auto;
         max-width: 100%;
     }
+
+/* ===== MOBILE FOOTER FIX ===== */
+.footer{
+    padding: 18px 15px 10px;   /* smaller padding */
+    margin-top: 40px;
+}
+
+.footer-inner{
+    flex-direction: column;
+    gap: 12px;                 /* reduce spacing */
+    text-align: center;
+}
+
+.footer-info h3{
+    font-size: 14px;           /* smaller title */
+}
+
+.footer-info p{
+    font-size: 10px;           /* smaller text */
+    margin: 3px 0;
+}
+
+.footer-contact-small{
+    font-size: 10px;
+}
+
+.footer-email{
+    font-size: 11px;
+}
+
+.footer-social{
+    margin-top: 5px;
+}
+
+.footer-social img{
+    width: 16px;               /* smaller icons */
+    height: 16px;
+    margin: 0 4px;
+}
+
+.footer-bottom{
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.footer-flag{
+    width: 12px;
+    height: 12px;
+}
 
 }
 
