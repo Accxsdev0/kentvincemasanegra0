@@ -44,7 +44,7 @@ body.loading header{
 
 /* HEADER */
 header {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
@@ -63,10 +63,6 @@ header {
     display:flex;
     align-items:center;
     gap:18px;
-}
-
-body{
-    padding-top:90px;
 }
 
 /* SCHOOL LOGO */
