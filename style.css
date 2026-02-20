@@ -112,50 +112,75 @@ header {
     text-shadow: 0 0 8px #00f7ff;
 }
 
-/* SIDE PANEL */
+
+/* SIDE PANEL — fixed, full viewport height, scrollable inside */
 .side-panel {
     position: fixed;
-    right: -250px;
     top: 0;
+    right: -250px;            /* hidden by default on desktop */
     width: 250px;
-    height: 100%;
+    height: 100vh;            /* use viewport height, not % */
+    max-height: 100dvh;
     background: rgba(30, 30, 30, 0.98);
     display: flex;
     flex-direction: column;
-    padding-top: 90px;
-    transition: 0.3s ease;
-    z-index: 1000000; /* HIGHER than header */
+
+    padding-top: 90px;        /* keep your header offset inside panel */
+    overflow-y: auto;         /* make panel contents scroll within */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    overscroll-behavior: contain;
+    transition: right 0.3s ease;
+    z-index: 1000000;         /* above header */
 }
 
 .side-panel.active {
     right: 0;
 }
 
+/* Make panel links friendly to touch scrolling */
 .side-panel a {
     color: #00f7ff;
     padding: 15px;
     text-decoration: none;
     letter-spacing: 2px;
     font-size: 14px;
-    transition: 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.side-panel a:hover {
-    background: rgba(0, 247, 255, 0.1);
-    box-shadow: 0 0 10px #00f7ff;
+
+html, body {
+  overscroll-behavior: none;
 }
 
-/* OVERLAY */
+/* Prevent background page from scrolling when panel is open */
+
+body.panel-open {
+  position: fixed;      /* key for iOS/Android */
+  width: 100%;          /* avoid width shrink */
+  overflow: hidden;     /* also fine on desktop */
+}
+
+
+/* Overlay stays fixed so the page cannot be interacted with */
 #overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    z-index: 999996; /* FIX */
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 999996;
 }
+#overlay.active { display: block; }
 
-#overlay.active {
-    display: block;
+/* Mobile width adjustments (still keep dynamic viewport height) */
+@media (max-width: 768px) {
+  .side-panel {
+    right: -70%;
+    width: 60%;
+    max-width: 240px;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding-top: max(70px, env(safe-area-inset-top));
+  }
 }
 
 /* SECTIONS */
@@ -1180,18 +1205,6 @@ header {
     /* Show hamburger on mobile */
     .hamburger{
         display: block;
-    }
-
-    /* Enable side panel on mobile */
-    .side-panel{
-        display: flex;
-        right: -70%;      /* hide properly */
-        width: 60%;       /* smaller width */
-        max-width: 240px; /* limit size */
-    }
-
-    .side-panel.active{
-        right: 0;
     }
 
     #category1 img,
