@@ -46,14 +46,14 @@ body.loading header{
 header {
     position: sticky;
     top: 0;
+    left: 0;
     width: 100%;
     backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0.85);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;   /* 🔥 BIG at start */
-    transition: all .4s ease;
+    padding: 15px 20px;
     z-index: 999999;
     border-bottom: 1px solid #222;
 }
