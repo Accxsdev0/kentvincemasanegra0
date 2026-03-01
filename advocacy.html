@@ -119,6 +119,45 @@ ul{
     margin-top:15px;
 }
 
+/* ===== ADVOCACY INTRO LAYOUT (LEFT IMAGE / RIGHT TEXT) ===== */
+.intro-flex{
+    display:flex;
+    align-items:center;
+    gap:35px;
+    flex-wrap:wrap;
+}
+
+.intro-flex .intro-image{
+    flex:1 1 380px;
+}
+
+.intro-flex .intro-text{
+    flex:1 1 420px;
+}
+
+.intro-flex img{
+    width:100%;
+    border-radius:12px;
+    object-fit:cover;
+}
+
+/* ===== PORTRAIT MEDIA FIX ===== */
+/* makes portrait images & videos look balanced */
+.media img,
+.media video{
+    width:100%;
+    max-width:800px;
+    max-height:520px;
+    object-fit:contain; /* ⭐ prevents stretching */
+    background:#0b0d12; /* fills empty sides nicely */
+}
+
+/* optional nicer frame */
+.media{
+    display:flex;
+    justify-content:center;
+}
+    
 /* ===== FOOTER (COPIED STYLE) ===== */
 .footer{
     text-align:center;
@@ -158,36 +197,40 @@ ul{
 
 <div class="card">
 
-<div class="media">
-    <img src="image/think.jpg" alt="Think Before You Share">
-</div>
+<div class="intro-flex">
 
-<p>
-In today’s digital world, information spreads faster than ever before. Social media allows people
-to share news, opinions, and experiences instantly, but not everything we see online is accurate
-or trustworthy. Fake news and misleading posts can create confusion, cause unnecessary panic,
-and sometimes lead to serious harm in communities.
-</p>
+    <div class="intro-image">
+        <img src="image/think.jpg" alt="Think Before You Share">
+    </div>
 
-<p>
-Before sharing a post, always ask yourself:
-</p>
+    <div class="intro-text">
+        <p>
+        In today’s digital world, information spreads faster than ever before.
+        Social media allows people to share news, opinions, and experiences instantly,
+        but not everything we see online is accurate or trustworthy. Fake news and
+        misleading posts can create confusion, cause unnecessary panic, and sometimes
+        lead to serious harm in communities.
+        </p>
 
-<ul>
-<li>Is this from a trusted and reliable source?</li>
-<li>Is there clear evidence supporting the information?</li>
-<li>Is the content recent, verified, and accurate?</li>
-</ul>
+        <p>Before sharing a post, always ask yourself:</p>
 
-<p>
-Being a responsible media user means thinking critically and verifying facts before clicking the
-share button. One incorrect post can spread misinformation to hundreds or even thousands of people.
-Let us use technology wisely by promoting truth, respect, and awareness online.
-</p>
+        <ul>
+            <li>Is this from a trusted and reliable source?</li>
+            <li>Is there clear evidence supporting the information?</li>
+            <li>Is the content recent, verified, and accurate?</li>
+        </ul>
 
-<p>
-<strong>#MediaLiteracy #ThinkBeforeYouClick #ResponsibleDigitalCitizen</strong>
-</p>
+        <p>
+        Being a responsible media user means thinking critically and verifying facts
+        before clicking the share button. One incorrect post can spread misinformation
+        to hundreds or even thousands of people. Let us use technology wisely by
+        promoting truth, respect, and awareness online.
+        </p>
+
+        <p>
+        <strong>#MediaLiteracy #ThinkBeforeYouClick #ResponsibleDigitalCitizen</strong>
+        </p>
+    </div>
 
 </div>
 
