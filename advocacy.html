@@ -134,16 +134,18 @@ ul{
     text-align:center;
 }
 
-.intro-image img{
+.intro-image img,
+.intro-image video{
     width:100%;
     max-width:420px;
     border-radius:14px;
     transition:all .4s ease;
     box-shadow:0 10px 30px rgba(0,0,0,.4);
+    object-fit:cover;
 }
 
-/* ✨ HOVER EFFECT */
-.intro-image img:hover{
+.intro-image img:hover,
+.intro-image video:hover{
     transform:translateY(-10px) scale(1.03);
     box-shadow:0 20px 45px rgba(77,163,255,.35);
 }
@@ -166,6 +168,24 @@ ul{
     }
 }
 
+/* ===== BOTTOM ADVOCACY TEXT ===== */
+.advocacy-bottom-text{
+    margin-top:35px;
+    padding-top:25px;
+    border-top:1px solid #23262f;
+}
+
+.advocacy-bottom-text p{
+    color:#c7c9ce;
+}
+
+.tags{
+    margin-top:15px;
+    font-weight:600;
+    color:#4da3ff;
+    letter-spacing:.5px;
+}
+    
 /* ===== PORTRAIT MEDIA FIX ===== */
 /* makes portrait images & videos look balanced */
 .media img,
@@ -252,32 +272,76 @@ ul{
     min-width:260px;
 }
 
-/* ===== END BANNER ===== */
+/* ===== PREMIUM END BANNER ===== */
 .end-banner{
-    margin-top:60px;
+    margin-top:10px;
+    background:#171a21; /* ⭐ matches card container */
+    border:1px solid #23262f;
+    border-radius:14px;
+    padding:45px 25px;
     text-align:center;
-    padding:50px 20px;
-    border-top:1px solid #23262f;
-    background:linear-gradient(180deg,#0f1115,#12141a);
+    position:relative;
+    overflow:hidden;
+    transition:.4s ease;
 }
 
+/* hover floating card */
+.end-banner:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+
+/* animated glow line */
+.end-banner::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#4da3ff,transparent);
+    animation:scan 4s linear infinite;
+}
+
+@keyframes scan{
+    100%{ left:100%; }
+}
+
+/* animated title */
 .end-banner h3{
-    font-size:26px;
-    margin-bottom:10px;
-    color:#ffffff;
+    font-size:28px;
+    margin-bottom:12px;
+    color:#fff;
+    animation:fadeUp 1s ease forwards;
 }
 
+/* subtitle animation */
 .end-banner p{
     color:#9aa0aa;
-    max-width:700px;
+    max-width:650px;
     margin:auto;
+    animation:fadeUp 1.4s ease forwards;
 }
 
+/* tags */
 .end-tags{
     margin-top:20px;
     color:#4da3ff;
     font-weight:600;
-    letter-spacing:.5px;
+    letter-spacing:.6px;
+    animation:fadeUp 1.8s ease forwards;
+}
+
+/* entrance animation */
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
     
 /* ===== FOOTER (COPIED STYLE) ===== */
@@ -315,9 +379,11 @@ ul{
 
 <div class="intro-flex">
 
-    <div class="intro-image">
-        <img src="image/think.jpg" alt="Think Before You Share">
-    </div>
+<div class="intro-image">
+    <video autoplay muted loop playsinline>
+        <source src="video/think.mp4" type="video/mp4">
+    </video>
+</div>
 
     <div class="intro-text">
         <p>
@@ -335,19 +401,21 @@ ul{
             <li>Is there clear evidence supporting the information?</li>
             <li>Is the content recent, verified, and accurate?</li>
         </ul>
-
-        <p>
-        Being a responsible media user means thinking critically and verifying facts
-        before clicking the share button. One incorrect post can spread misinformation
-        to hundreds or even thousands of people. Let us use technology wisely by
-        promoting truth, respect, and awareness online.
-        </p>
-
-        <p>
-        <strong>#MediaLiteracy #ThinkBeforeYouClick #ResponsibleDigitalCitizen</strong>
-        </p>
     </div>
 
+</div> <!-- END intro-flex -->
+
+<div class="advocacy-bottom-text">
+    <p>
+    Being a responsible media user means thinking critically and verifying facts
+    before clicking the share button. One incorrect post can spread misinformation
+    to hundreds or even thousands of people. Let us use technology wisely by
+    promoting truth, respect, and awareness online.
+    </p>
+
+    <p class="tags">
+        #MediaLiteracy #ThinkBeforeYouClick #ResponsibleDigitalCitizen
+    </p>
 </div>
 
 <!-- ================= ADVOCACY CONTENTS ================= -->
