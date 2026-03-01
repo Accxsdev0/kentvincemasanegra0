@@ -137,16 +137,56 @@ header {
     right: 0;
 }
 
-/* Make panel links friendly to touch scrolling */
 .side-panel a {
+    position: relative;
     color: #00f7ff;
-    padding: 15px;
+    padding: 15px 18px;
     text-decoration: none;
     letter-spacing: 2px;
     font-size: 14px;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: all .35s ease;
+    border-left: 3px solid transparent;
 }
 
+/* CYAN HOVER GLOW */
+.side-panel a:hover {
+    background: rgba(0,247,255,0.08);
+    border-left: 3px solid #00f7ff;
+    box-shadow:
+        inset 0 0 15px rgba(0,247,255,.25),
+        0 0 12px rgba(0,247,255,.35);
+    transform: translateX(6px);
+}
+
+/* smooth neon sweep effect */
+.side-panel a::before {
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    height:100%;
+    width:0%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,247,255,.25),
+        transparent
+    );
+    transition:.4s;
+}
+
+.side-panel a:hover::before {
+    width:100%;
+}
+
+.menu-parent:hover{
+    background: rgba(0,247,255,0.08);
+    box-shadow:
+        inset 0 0 15px rgba(0,247,255,.25),
+        0 0 12px rgba(0,247,255,.35);
+    border-left:3px solid #00f7ff;
+    transform: translateX(6px);
+}
 
 html, body {
   overscroll-behavior: none;
@@ -159,7 +199,6 @@ body.panel-open {
   width: 100%;          /* avoid width shrink */
   overflow: hidden;     /* also fine on desktop */
 }
-
 
 /* Overlay stays fixed so the page cannot be interacted with */
 #overlay {
