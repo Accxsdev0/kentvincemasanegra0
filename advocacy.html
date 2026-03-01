@@ -92,8 +92,15 @@ h1{
     border-radius:14px;
     padding:35px;
     margin-bottom:40px;
+    transition:.35s ease;
 }
 
+.card:hover{
+    transform:translateY(-6px);
+    border-color:#3a3f4b;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+    
 /* MEDIA */
 .media{
     margin:30px 0;
@@ -168,6 +175,21 @@ ul{
     }
 }
 
+h1{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:25px;
+    background:linear-gradient(90deg,#ffffff,#4da3ff,#ffffff);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleFlow 6s linear infinite;
+}
+
+@keyframes titleFlow{
+    to{ background-position:200% center; }
+}
+    
 /* ===== BOTTOM ADVOCACY TEXT ===== */
 .advocacy-bottom-text{
     margin-top:35px;
@@ -217,7 +239,7 @@ ul{
     width:100%;
     max-width:320px;
     aspect-ratio: 3 / 4;   /* automatic portrait ratio */
-    object-fit:cover;
+    object-fit:cove          r;
     border-radius:12px;
     cursor:pointer;
     transition:.35s ease;
@@ -243,6 +265,17 @@ ul{
     header{padding:12px 18px;}
 }
 
+.media video{
+    transition:.4s ease;
+}
+
+.media video:hover{
+    transform:scale(1.02);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.6),
+        0 0 30px rgba(77,163,255,.2);
+}
+    
 /* ===== THINK IMAGE + TEXT LAYOUT ===== */
 .advocacy-top{
     display:flex;
@@ -272,26 +305,26 @@ ul{
     min-width:260px;
 }
 
-/* ===== PREMIUM END BANNER ===== */
+/* ===== END BANNER CONTAINER ===== */
 .end-banner{
-    margin-top:10px;
-    background:#171a21; /* ⭐ matches card container */
-    border:1px solid #23262f;
-    border-radius:14px;
-    padding:45px 25px;
+    margin-top:20px; /* removes big gap */
+    padding:55px 25px;
     text-align:center;
+    background:#171a21; /* matches card/container color */
+    border:1px solid #23262f;
+    border-radius:16px;
     position:relative;
     overflow:hidden;
     transition:.4s ease;
 }
 
-/* hover floating card */
+/* hover floating effect */
 .end-banner:hover{
     transform:translateY(-6px);
-    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
 
-/* animated glow line */
+/* subtle animated glow line */
 .end-banner::before{
     content:"";
     position:absolute;
@@ -300,36 +333,57 @@ ul{
     width:100%;
     height:2px;
     background:linear-gradient(90deg,transparent,#4da3ff,transparent);
-    animation:scan 4s linear infinite;
+    animation:shine 4s linear infinite;
 }
 
-@keyframes scan{
+@keyframes shine{
     100%{ left:100%; }
 }
 
-/* animated title */
+/* ===== TITLE ANIMATION ===== */
 .end-banner h3{
-    font-size:28px;
-    margin-bottom:12px;
-    color:#fff;
-    animation:fadeUp 1s ease forwards;
+    font-size:30px;
+    color:#ffffff;
+    margin-bottom:15px;
+    letter-spacing:.5px;
+    animation:titleReveal 1s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-/* subtitle animation */
+/* smooth cinematic reveal */
+@keyframes titleReveal{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.95);
+        letter-spacing:6px;
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        letter-spacing:.5px;
+    }
+}
+
+/* paragraph animation */
 .end-banner p{
     color:#9aa0aa;
-    max-width:650px;
+    max-width:680px;
     margin:auto;
-    animation:fadeUp 1.4s ease forwards;
+    animation:fadeUp 1.3s ease forwards;
 }
 
-/* tags */
+/* animated tags */
 .end-tags{
-    margin-top:20px;
+    margin-top:22px;
     color:#4da3ff;
     font-weight:600;
-    letter-spacing:.6px;
-    animation:fadeUp 1.8s ease forwards;
+    letter-spacing:.7px;
+    animation:fadeUp 1.7s ease forwards;
+    transition:.3s;
+}
+
+/* hover glow on tags */
+.end-banner:hover .end-tags{
+    text-shadow:0 0 12px rgba(77,163,255,.5);
 }
 
 /* entrance animation */
@@ -352,6 +406,17 @@ ul{
     color:#8b8f98;
     background:#12141a;
     border-top:1px solid #23262f;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all .9s cubic-bezier(.22,1,.36,1);
+}
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
 }
     
 </style>
@@ -476,5 +541,20 @@ onclick="window.open('https://www.facebook.com/photo/?fbid=1244525181033318&set=
 © 2026 Kent Vince S. Masanegra || All Rights Reserved
 </footer>
 
+<script>
+const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{threshold:.15});
+
+document.querySelectorAll(".card, .media, .media-row, .end-banner")
+.forEach(el=>{
+    el.classList.add("reveal");
+    observer.observe(el);
+});
+</script>
 </body>
 </html>
