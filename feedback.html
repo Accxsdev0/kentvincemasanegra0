@@ -4,51 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community Feedback</title>
-<link rel="icon" type="image/png" href="image/kentlogo.png">
+
+<link rel="icon" href="image/kentlogo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
     margin:0;
-    font-family:Inter,Arial;
+    font-family:'Inter',sans-serif;
     background:#0f1115;
-    color:#fff;
+    color:white;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{
     padding:15px 25px;
     background:#12141a;
     border-bottom:1px solid #23262f;
 }
+
 .back-btn{
-    text-decoration:none;
     color:white;
+    text-decoration:none;
     padding:8px 18px;
     border-radius:30px;
     border:1px solid #3a3f4b;
 }
-.back-btn:hover{
-    background:#4da3ff;
-}
+.back-btn:hover{background:#4da3ff}
 
-/* ===== MAIN ===== */
-.container{
-    max-width:900px;
+/* DASHBOARD */
+.dashboard{
+    max-width:1100px;
     margin:auto;
     padding:40px 20px;
 }
 
-/* ===== CARD ===== */
-.card{
-    background:#171a21;
-    border:1px solid #23262f;
-    border-radius:14px;
-    padding:20px;
-    margin-bottom:20px;
+.posts-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:22px;
 }
 
-/* INPUTS */
-input,textarea{
+/* POST CARD */
+.post-card{
+    background:#171a21;
+    border:1px solid #23262f;
+    border-radius:16px;
+    padding:18px;
+    animation:fadeUp .6s ease;
+    transition:.35s;
+}
+.post-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(0,0,0,.5);
+}
+
+.post-top{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+}
+
+.username{font-weight:600}
+.time{font-size:12px;color:#9aa0aa}
+
+.admin-reply{
+    margin-top:12px;
+    padding:10px;
+    background:#0f172a;
+    border-left:3px solid #4da3ff;
+    border-radius:6px;
+}
+
+/* FLOAT BUTTON */
+.floating-btn{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#4da3ff;
+    border:none;
+    padding:16px 22px;
+    border-radius:50px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(77,163,255,.5);
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    width:90%;
+    max-width:420px;
+    background:#171a21;
+    padding:25px;
+    border-radius:16px;
+}
+
+input, textarea{
     width:100%;
     margin:8px 0;
     padding:12px;
@@ -58,59 +124,29 @@ input,textarea{
     color:white;
 }
 
-textarea{resize:none;height:90px;}
+textarea{
+    height:90px;
+    resize:none;
+}
 
 button{
-    padding:10px 20px;
     border:none;
+    padding:12px;
     border-radius:30px;
     background:#4da3ff;
     color:white;
+    font-weight:600;
     cursor:pointer;
-    font-weight:600;
-}
-
-button:hover{
-    box-shadow:0 0 12px rgba(77,163,255,.6);
-}
-
-/* ===== POSTS ===== */
-.post{
-    display:flex;
-    gap:15px;
-    margin-bottom:18px;
-    background:#12141a;
-    border-radius:12px;
-    padding:15px;
-    border:1px solid #23262f;
-}
-
-.avatar{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-}
-
-.post-header{
-    font-weight:600;
-}
-
-.time{
-    font-size:12px;
-    color:#9aa0aa;
-}
-
-.admin-reply{
-    margin-top:10px;
-    padding:10px;
-    background:#0f172a;
-    border-left:3px solid #4da3ff;
-    border-radius:6px;
 }
 
 .delete-btn{
-    margin-top:8px;
     background:#ff4d4d;
+    margin-top:8px;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(25px)}
+to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
@@ -121,165 +157,61 @@ button:hover{
 <a href="impact.html" class="back-btn">← Back</a>
 </header>
 
-<div class="container">
-
+<div class="dashboard">
 <h2>Community Feedback</h2>
+<div class="posts-grid" id="posts"></div>
+</div>
 
-<!-- REGISTER / LOGIN -->
-<div class="card" id="authBox">
-<h3>Start Posting</h3>
+<button class="floating-btn" onclick="openModal()">
+Start Posting
+</button>
 
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+
+<div id="authBox">
+<h3>Register First</h3>
 <input id="fname" placeholder="First Name">
 <input id="mname" placeholder="Middle Name">
 <input id="lname" placeholder="Last Name">
 <input id="username" placeholder="Username">
 <input id="password" type="password" placeholder="Password">
-
-<button onclick="register()">Register / Login</button>
+<button onclick="register()">Continue</button>
 </div>
 
-<!-- POST BOX -->
-<div class="card" id="postBox" style="display:none;">
+<div id="postBox" style="display:none;">
 <h3>Write a Comment</h3>
-<textarea id="commentText" placeholder="Share your thoughts..."></textarea>
+<textarea id="commentText"
+placeholder="Share your thoughts..."></textarea>
 <button onclick="addPost()">Send</button>
 </div>
 
-<!-- POSTS LIST -->
-<div id="posts"></div>
-
+</div>
 </div>
 
-<script>
-
-/* ===== ADMIN ACCOUNT ===== */
-const ADMIN_USER="admin";
-const ADMIN_PASS="admin123";
-
-/* ===== USER SESSION ===== */
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-if(currentUser){
-    document.getElementById("authBox").style.display="none";
-    document.getElementById("postBox").style.display="block";
-}
-
-/* ===== REGISTER / LOGIN ===== */
-function register(){
-    const user={
-        name:
-        fname.value+" "+mname.value+" "+lname.value,
-        username:username.value,
-        password:password.value
-    };
-
-    localStorage.setItem("currentUser",JSON.stringify(user));
-    location.reload();
-}
-
-/* ===== LOAD POSTS ===== */
-let posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-function savePosts(){
-    localStorage.setItem("posts",JSON.stringify(posts));
-}
-
-/* ===== ADD POST ===== */
-function addPost(){
-    if(!currentUser){
-        alert("Login first!");
-        return;
-    }
-
-    const text=document.getElementById("commentText").value;
-
-    const post={
-        id:Date.now(),
-        user:currentUser.name,
-        username:currentUser.username,
-        text:text,
-        time:new Date().toLocaleString(),
-        reply:""
-    };
-
-    posts.unshift(post);
-    savePosts();
-    renderPosts();
-    commentText.value="";
-}
-
-/* ===== ADMIN REPLY ===== */
-function replyPost(id){
-    const reply=prompt("Admin reply:");
-    if(!reply) return;
-
-    posts.find(p=>p.id===id).reply=reply;
-    savePosts();
-    renderPosts();
-}
-
-/* ===== DELETE ===== */
-function deletePost(id){
-    posts=posts.filter(p=>p.id!==id);
-    savePosts();
-    renderPosts();
-}
-
-/* ===== RENDER ===== */
-function renderPosts(){
-    const container=document.getElementById("posts");
-    container.innerHTML="";
-
-    posts.forEach(p=>{
-        container.innerHTML+=`
-        <div class="post">
-            <img class="avatar"
-            src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-
-            <div>
-                <div class="post-header">${p.user}</div>
-                <div class="time">${p.time}</div>
-                <p>${p.text}</p>
-
-                ${p.reply ?
-                `<div class="admin-reply"><b>Admin:</b> ${p.reply}</div>` : ""}
-
-                ${
-                currentUser &&
-                currentUser.username===ADMIN_USER ?
-                `
-                <button onclick="replyPost(${p.id})">Reply</button>
-                <button class="delete-btn"
-                onclick="deletePost(${p.id})">Delete</button>
-                `
-                : ""
-                }
-            </div>
-        </div>`;
-    });
-}
-
-renderPosts();
-
-</script>
-
-<!-- FIREBASE SDK -->
+<!-- ✅ FIREBASE SCRIPT -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { 
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  serverTimestamp,
-  query,
-  orderBy,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* ================= FIREBASE IMPORT ================= */
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-/* ===== YOUR FIREBASE CONFIG ===== */
+import {
+getFirestore,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+serverTimestamp,
+doc,
+updateDoc,
+deleteDoc
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyAuYZ68uU9Iw8rN-0Kfm3Wzul2vpJMD6XE",
   authDomain: "kent-da153.firebaseapp.com",
@@ -289,11 +221,115 @@ const firebaseConfig = {
   appId: "1:386160813839:web:b3f6e6ca211e9b742b007a"
 };
 
-/* ===== INITIALIZE ===== */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/* ================= USER ================= */
+const ADMIN_USER="admin";
+let currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+/* MODAL */
+window.openModal=()=>{
+ document.getElementById("modal").style.display="flex";
+
+ if(currentUser){
+   authBox.style.display="none";
+   postBox.style.display="block";
+ }
+}
+
+/* REGISTER */
+window.register=()=>{
+ const user={
+   name: fname.value+" "+mname.value+" "+lname.value,
+   username: username.value
+ };
+ localStorage.setItem("currentUser",JSON.stringify(user));
+ location.reload();
+}
+
+/* ADD POST */
+window.addPost=async()=>{
+ if(!currentUser) return alert("Register first");
+
+ const text=commentText.value.trim();
+ if(!text) return;
+
+ await addDoc(collection(db,"posts"),{
+   name:currentUser.name,
+   username:currentUser.username,
+   text:text,
+   reply:"",
+   time:serverTimestamp()
+ });
+
+ commentText.value="";
+}
+
+/* REALTIME POSTS */
+const postsContainer=document.getElementById("posts");
+
+const q=query(collection(db,"posts"),orderBy("time","desc"));
+
+onSnapshot(q,(snapshot)=>{
+ postsContainer.innerHTML="";
+
+ snapshot.forEach(docSnap=>{
+   const p=docSnap.data();
+   const id=docSnap.id;
+
+   const card=document.createElement("div");
+   card.className="post-card";
+
+   card.innerHTML=`
+   <div class="post-top">
+     <img class="avatar"
+     src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+     <div>
+       <div class="username">${p.name}</div>
+       <div class="time">
+         ${p.time?.toDate().toLocaleString() || ""}
+       </div>
+     </div>
+   </div>
+
+   <p>${p.text}</p>
+
+   ${p.reply ?
+     `<div class="admin-reply"><b>Admin:</b> ${p.reply}</div>`:""}
+
+   ${
+     currentUser &&
+     currentUser.username===ADMIN_USER ?
+     `
+     <button onclick="replyPost('${id}')">Reply</button>
+     <button class="delete-btn"
+     onclick="deletePost('${id}')">Delete</button>
+     `:""
+   }
+   `;
+
+   postsContainer.appendChild(card);
+ });
+});
+
+/* ADMIN REPLY */
+window.replyPost=async(id)=>{
+ const reply=prompt("Admin reply:");
+ if(!reply) return;
+
+ await updateDoc(doc(db,"posts",id),{
+   reply:reply
+ });
+}
+
+/* DELETE */
+window.deletePost=async(id)=>{
+ if(!confirm("Delete post?")) return;
+ await deleteDoc(doc(db,"posts",id));
+}
+
 </script>
-    
 </body>
 </html>
