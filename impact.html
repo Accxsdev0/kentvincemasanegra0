@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact Reflection | Think Before You Share</title>
+
+<link rel="icon" type="image/png" href="image/kentlogo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== GLOBAL ===== */
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#0f1115;
+    color:#e4e6eb;
+    line-height:1.8;
+}
+
+/* ===== HEADER ===== */
+header{
+    position:sticky;
+    top:0;
+    background:#12141a;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #23262f;
+}
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+.logo img{height:40px;}
+.logo span{
+    font-weight:700;
+    font-size:18px;
+}
+.back-btn{
+    text-decoration:none;
+    padding:9px 20px;
+    border-radius:50px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+    transition:.3s;
+}
+.back-btn:hover{
+    background:rgba(77,163,255,.15);
+    border-color:#4da3ff;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:60px 25px;
+}
+
+h1{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#fff,#4da3ff,#fff);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleFlow 6s linear infinite;
+}
+@keyframes titleFlow{
+    to{background-position:200% center;}
+}
+
+.subtitle{
+    text-align:center;
+    color:#9aa0aa;
+    margin-bottom:40px;
+}
+
+/* ===== CARD ===== */
+.card{
+    background:#171a21;
+    border:1px solid #23262f;
+    border-radius:16px;
+    padding:35px;
+    margin-bottom:35px;
+    transition:.35s;
+}
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+
+/* SECTION TITLE */
+.card h2{
+    color:#4da3ff;
+    margin-bottom:15px;
+}
+
+/* ===== QUESTION BOX ===== */
+.question-box{
+    background:#171a21;
+    border:1px solid #23262f;
+    border-radius:16px;
+    padding:35px;
+    text-align:center;
+    transition:.4s;
+}
+.question-box:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+
+.question{
+    margin:18px 0;
+    font-size:18px;
+    color:#c7c9ce;
+}
+
+/* ===== COMMENT BUTTON ===== */
+.comment-btn{
+    margin-top:25px;
+    display:inline-block;
+    padding:14px 28px;
+    border-radius:40px;
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+    border:1px solid #4da3ff;
+    background:rgba(77,163,255,.08);
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+/* glow hover */
+.comment-btn:hover{
+    background:#4da3ff;
+    box-shadow:
+        0 0 15px rgba(77,163,255,.6),
+        0 0 40px rgba(77,163,255,.4);
+    transform:translateY(-3px);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+    text-align:center;
+    padding:18px;
+    font-size:13px;
+    color:#8b8f98;
+    background:#12141a;
+    border-top:1px solid #23262f;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:.9s cubic-bezier(.22,1,.36,1);
+}
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="image/kentlogo.png">
+        <span>KENT PORTFOLIO</span>
+    </div>
+    <a href="advocacy.html" class="back-btn">← Back</a>
+</header>
+
+<div class="container">
+
+<h1>Impact Reflection</h1>
+<p class="subtitle">Advocacy Title: “Think Before You Share”</p>
+
+<!-- REFLECTION CONTENT -->
+<div class="card reveal">
+<h2>1. Which post was most effective? Why?</h2>
+<p>
+The engagement post (question/poll) was the most effective because it encouraged
+people to participate and share their opinions. Many responded honestly about
+their experiences with fake news. Since it allowed interaction, more people became
+aware of the importance of checking information before sharing.
+</p>
+</div>
+
+<div class="card reveal">
+<h2>2. What difficulties did you encounter?</h2>
+<p>
+One difficulty I encountered was encouraging people to participate and respond
+to my posts. Some viewed the content but did not comment or react. Another
+challenge was ensuring that my information was accurate and reliable, so I had
+to double‑check sources to avoid spreading misinformation.
+</p>
+</div>
+
+<div class="card reveal">
+<h2>3. Did your advocacy influence people?</h2>
+<p>
+Yes, my advocacy influenced people in a simple but meaningful way. Some said
+they learned the importance of verifying information before sharing, while
+others mentioned they would start reading full articles instead of only
+headlines. Even small behavioral changes show that the advocacy made an impact.
+</p>
+</div>
+
+<!-- QUESTION SECTION -->
+<div class="question-box reveal">
+
+<h2>Reflection Questions</h2>
+
+<div class="question">What did you learn?</div>
+<div class="question">Did your opinion change?</div>
+<div class="question">Will you apply it?</div>
+
+<!-- CHANGE LINK TO YOUR COMMENT PAGE -->
+<a href="feedback.html" class="comment-btn">
+Leave a Comment
+</a>
+
+</div>
+
+</div>
+
+<footer class="footer">
+© 2026 Kent Vince S. Masanegra || All Rights Reserved
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{threshold:.15});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+    observer.observe(el);
+});
+</script>
+
+</body>
+</html>
