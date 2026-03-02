@@ -53,6 +53,23 @@ header{
 }
 .back-btn:hover{background:#4da3ff}
 
+.admin-badge{
+    margin-left:8px;
+    font-size:12px;
+    padding:3px 8px;
+    border-radius:20px;
+    background:linear-gradient(90deg,#ffd700,#ffae00);
+    color:#000;
+    font-weight:700;
+    box-shadow:0 0 10px rgba(255,215,0,.8);
+    animation:adminGlow 2s infinite alternate;
+}
+
+@keyframes adminGlow{
+    from{box-shadow:0 0 6px rgba(255,215,0,.5);}
+    to{box-shadow:0 0 18px rgba(255,215,0,1);}
+}
+    
 /* DASHBOARD */
 .dashboard{
     max-width:1100px;
@@ -270,6 +287,53 @@ to{opacity:1;transform:translateY(0)}
 .link-action:hover{
     opacity:.7;
 }
+
+.post-actions{
+    margin-top:10px;
+}
+
+.like-btn{
+    background:#1f2937;
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:14px;
+    transition:.2s;
+}
+
+.like-btn:hover{
+    background:#ef4444;
+}
+
+.google-btn{
+    width:100%;
+    background:#fff;
+    color:#444;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    border-radius:10px;
+    padding:10px;
+    font-weight:600;
+}
+
+.google-btn img{
+    width:18px;
+}
+
+.post-status{
+    font-size:13px;
+    margin-bottom:8px;
+    min-height:18px;
+    color:#ffb020;
+    font-weight:500;
+}
+.post-status.success{
+    color:#22c55e;
+}
+.post-status.error{
+    color:#ff4d4d;
+}
     
 </style>
 </head>
@@ -314,10 +378,16 @@ to{opacity:1;transform:translateY(0)}
         Create an account
     </span>
 </p>
+    
+<button class="google-btn" onclick="googleLogin()">
+<img src="https://developers.google.com/identity/images/g-logo.png">
+Continue with Google
+</button>
 </div>
 
 <div id="registerBox" style="display:none;">
 <h3>Create Account</h3>
+<p class="link-action" onclick="openLogin()">← Back to Login</p>
 
 <input id="fname" placeholder="First Name">
 <input id="mname" placeholder="Middle Name">
@@ -330,6 +400,8 @@ to{opacity:1;transform:translateY(0)}
 
 <div id="postBox" style="display:none;">
 <h3>Write a Comment</h3>
+
+<div id="postStatus" class="post-status"></div>
 <textarea id="commentText"
 placeholder="Share your thoughts..."></textarea>
 <button onclick="addPost()">Send</button>
@@ -355,7 +427,9 @@ onSnapshot,
 serverTimestamp,
 doc,
 updateDoc,
-deleteDoc
+deleteDoc,
+arrayUnion,
+arrayRemove
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -387,7 +461,7 @@ const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
 let isAdmin = false;
-
+let lastPostTime = 0; // anti‑spam timer
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
@@ -421,24 +495,55 @@ window.openModal = () => {
 /* ADD POST */
 window.addPost = async () => {
 
- if(!currentUser) return alert("Login first");
+ const status = document.getElementById("postStatus");
+
+ /* ===== LOGIN CHECK ===== */
+ if(!currentUser){
+    status.className="post-status error";
+    status.textContent="⚠ Please login first.";
+    return;
+ }
+
+ /* ===== COOLDOWN CHECK ===== */
+ const now = Date.now();
+ const wait = 10000 - (now - lastPostTime);
+
+ if(wait > 0){
+    status.className="post-status";
+    status.textContent =
+        `⏳ Please wait ${Math.ceil(wait/1000)}s before posting again.`;
+    return;
+ }
 
  const text = commentText.value.trim();
- if(!text) return;
+ if(!text){
+    status.className="post-status error";
+    status.textContent="Write something first.";
+    return;
+ }
 
+ /* ===== SAVE POST ===== */
  await addDoc(collection(db,"posts"),{
    name: currentUser.displayName || currentUser.email,
    username: currentUser.email,
    userPhoto: currentUser.photoURL ||
    "https://cdn-icons-png.flaticon.com/512/7175/7175408.png",
-   text: text,
-   likes: 0,
-   reply: "",
-   time: serverTimestamp()
+   text:text,
+   likes:0,
+   reply:"",
+   time:serverTimestamp()
  });
 
+ lastPostTime = now;
+
  commentText.value="";
- modal.style.display="none";
+ status.className="post-status success";
+ status.textContent="✅ Posted successfully!";
+
+ setTimeout(()=>{
+     modal.style.display="none";
+     status.textContent="";
+ },900);
 };
 
 /* REALTIME POSTS */
@@ -461,7 +566,12 @@ onSnapshot(q,(snapshot)=>{
      <img class="avatar"
      src="${p.userPhoto || 'https://cdn-icons-png.flaticon.com/512/7175/7175408.png'}">
      <div>
-       <div class="username">${p.name}</div>
+       <div class="username">
+  ${p.name}
+  ${p.username === "adminken@gmail.com"
+     ? `<span class="admin-badge">👑 Admin</span>`
+     : ""}
+</div>
        <div class="time">
          ${p.time?.toDate().toLocaleString() || ""}
        </div>
@@ -469,6 +579,13 @@ onSnapshot(q,(snapshot)=>{
    </div>
 
    <p>${p.text}</p>
+
+   <div class="post-actions">
+    <button class="like-btn"
+        onclick="toggleLike('${id}', ${JSON.stringify(p.likedBy || [])})">
+        ❤️ ${p.likes || 0}
+    </button>
+   </div>
 
    ${p.reply ?
      `<div class="admin-reply"><b>Admin:</b> ${p.reply}</div>`:""}
@@ -503,6 +620,29 @@ window.deletePost=async(id)=>{
  await deleteDoc(doc(db,"posts",id));
 }
 
+window.toggleLike = async (postId, likedBy=[]) => {
+
+    if(!currentUser){
+        alert("Login to like posts");
+        return;
+    }
+
+    const ref = doc(db,"posts",postId);
+    const uid = currentUser.uid;
+
+    if(likedBy.includes(uid)){
+        await updateDoc(ref,{
+            likes: (likedBy.length - 1),
+            likedBy: arrayRemove(uid)
+        });
+    }else{
+        await updateDoc(ref,{
+            likes: (likedBy.length + 1),
+            likedBy: arrayUnion(uid)
+        });
+    }
+};
+    
 const modalContent = document.querySelector(".modal-content");
 
 modal.addEventListener("click",(e)=>{
