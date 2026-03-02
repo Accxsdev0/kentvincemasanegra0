@@ -76,6 +76,7 @@ h1{
     -webkit-text-fill-color:transparent;
     animation:titleFlow 6s linear infinite;
 }
+
 @keyframes titleFlow{
     to{background-position:200% center;}
 }
@@ -95,29 +96,26 @@ h1{
     margin-bottom:35px;
     transition:.35s ease;
 }
+
 .card:hover{
     transform:translateY(-6px);
     box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
+
 .card h2{
     color:#4da3ff;
     margin-bottom:15px;
 }
 
-/* ===== QUESTIONS MAIN BOX ===== */
+/* ===== QUESTIONS BOX ===== */
 .question-box{
     background:#171a21;
     border:1px solid #23262f;
     border-radius:16px;
     padding:35px;
-    margin-top:10px;
-    transition:.35s;
-}
-.question-box:hover{
-    box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
 
-/* GRID FOR 3 QUESTIONS */
+/* GRID */
 .question-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
@@ -125,7 +123,7 @@ h1{
     margin-top:20px;
 }
 
-/* INDIVIDUAL QUESTION CARD */
+/* QUESTION CARD */
 .question-card{
     padding:22px;
     border-radius:14px;
@@ -139,17 +137,15 @@ h1{
     overflow:hidden;
 }
 
-/* cyan glow hover */
 .question-card:hover{
     transform:translateY(-6px);
     border-color:#4da3ff;
     box-shadow:
         0 10px 30px rgba(0,0,0,.6),
         0 0 18px rgba(77,163,255,.35);
-    color:#ffffff;
+    color:#fff;
 }
 
-/* animated glow line */
 .question-card::before{
     content:"";
     position:absolute;
@@ -164,7 +160,7 @@ h1{
     left:100%;
 }
 
-/* ===== COMMENT BUTTON ===== */
+/* ===== BUTTON ===== */
 .comment-wrapper{
     text-align:center;
 }
@@ -211,6 +207,50 @@ h1{
     transform:translateY(0);
 }
 
+/* ========================= */
+/* 📱 MOBILE RESPONSIVE */
+/* ========================= */
+@media(max-width:768px){
+
+    header{
+        padding:12px 18px;
+    }
+
+    .logo span{
+        font-size:15px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    .container{
+        padding:40px 18px;
+    }
+
+    .card,
+    .question-box{
+        padding:22px;
+    }
+
+    .question-card{
+        font-size:16px;
+        padding:18px;
+    }
+
+    .comment-btn{
+        width:100%;
+        text-align:center;
+    }
+}
+
+/* ===== TABLET OPTIMIZATION ===== */
+@media(min-width:769px) and (max-width:1024px){
+    .container{
+        padding:50px 30px;
+    }
+}
+
 </style>
 </head>
 
@@ -229,57 +269,41 @@ h1{
 <h1>Impact Reflection</h1>
 <p class="subtitle">Advocacy Title: “Think Before You Share”</p>
 
-<!-- REFLECTION CONTENT -->
 <div class="card reveal">
 <h2>1. Which post was most effective? Why?</h2>
 <p>
-The engagement post (question/poll) was the most effective because it encouraged people to participate and share their opinions. Many responded honestly about their experiences with fake news. Since it allowed interaction, more people became aware of the importance of checking information before sharing. It created discussion, which made the advocacy stronger and more meaningful.
+The engagement post encouraged participation and discussion, helping people become more aware of verifying information before sharing online.
 </p>
 </div>
 
 <div class="card reveal">
 <h2>2. What difficulties did you encounter?</h2>
 <p>
-One difficulty I encountered was encouraging people to participate and respond to my posts. Some people viewed the content but did not comment or react. Another challenge was making sure my information was accurate and reliable. I had to double-check sources to ensure that I was not spreading misinformation while promoting media literacy.
+Encouraging interaction and ensuring information accuracy were the main challenges while promoting media literacy responsibly.
 </p>
 </div>
 
 <div class="card reveal">
 <h2>3. Did your advocacy influence people?</h2>
 <p>
-Yes, my advocacy influenced people in a simple but meaningful way. Some of them said they learned the importance of verifying information before sharing. Others mentioned that they would start reading full articles instead of just the headlines. Even small changes in their behavior show that the advocacy made an impact
+Yes. Some learned to verify information and read beyond headlines, showing meaningful behavioral change.
 </p>
 </div>
 
-<!-- QUESTIONS SECTION -->
 <div class="question-box reveal">
-
 <h2>Reflection Questions</h2>
 
 <div class="question-grid">
-
-<div class="question-card">
-What did you learn?
-</div>
-
-<div class="question-card">
-Did your opinion change?
-</div>
-
-<div class="question-card">
-Will you apply it?
-</div>
-
+<div class="question-card">What did you learn?</div>
+<div class="question-card">Did your opinion change?</div>
+<div class="question-card">Will you apply it?</div>
 </div>
 
 <div class="comment-wrapper">
-<a href="feedback.html" class="comment-btn">
-Leave a Comment
-</a>
+<a href="feedback.html" class="comment-btn">Leave a Comment</a>
 </div>
 
 </div>
-
 </div>
 
 <footer class="footer">
@@ -287,17 +311,16 @@ Leave a Comment
 </footer>
 
 <script>
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
-    });
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
 },{threshold:.15});
 
-document.querySelectorAll(".reveal").forEach(el=>{
-    observer.observe(el);
-});
+document.querySelectorAll(".reveal")
+.forEach(el=>observer.observe(el));
 </script>
 
 </body>
