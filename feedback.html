@@ -35,6 +35,11 @@ body{
     background:var(--bg);
     color:var(--text);
     transition:.4s;
+
+    /* ✅ ADD THESE */
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
 /* HEADER */
@@ -75,6 +80,7 @@ header{
     max-width:1100px;
     margin:auto;
     padding:40px 20px;
+    flex:1;
 }
 
 .posts-grid{
@@ -576,58 +582,8 @@ window.addPost = async () => {
  },900);
 };
 
- /* ===== LOGIN CHECK ===== */
- if(!currentUser){
-    status.className="post-status error";
-    status.textContent="⚠ Please login first.";
-    return;
- }
-
- /* ===== COOLDOWN CHECK ===== */
- const now = Date.now();
- const wait = 10000 - (now - lastPostTime);
-
- if(wait > 0){
-    status.className="post-status";
-    status.textContent =
-        `⏳ Please wait ${Math.ceil(wait/1000)}s before posting again.`;
-    return;
- }
-
- const text = commentText.value.trim();
- if(!text){
-    status.className="post-status error";
-    status.textContent="Write something first.";
-    return;
- }
-
- /* ===== SAVE POST ===== */
- await addDoc(collection(db,"posts"),{
-   name: currentUser.displayName || currentUser.email,
-   username: currentUser.email,
-   userPhoto: currentUser.photoURL ||
-   "https://cdn-icons-png.flaticon.com/512/7175/7175408.png",
-   text:text,
-   likes:0,
-   reply:"",
-   time:serverTimestamp()
- });
-
- lastPostTime = now;
-
- commentText.value="";
- status.className="post-status success";
- status.textContent="✅ Posted successfully!";
-
- setTimeout(()=>{
-     modal.style.display="none";
-     status.textContent="";
- },900);
-};
-
 /* REALTIME POSTS */
 const postsContainer=document.getElementById("posts");
-
 const q=query(collection(db,"posts"),orderBy("time","desc"));
 
 onSnapshot(q,(snapshot)=>{
