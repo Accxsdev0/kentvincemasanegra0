@@ -35,12 +35,7 @@ body{
     background:var(--bg);
     color:var(--text);
     transition:.4s;
-
-    /* ✅ ADD THESE */
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-}
+} 
 
 /* HEADER */
 header{
@@ -367,40 +362,40 @@ to{opacity:1;transform:translateY(0)}
 .auth-link:hover{
     color:var(--accent);
 }
+
+.star{
+    cursor:pointer;
+    transition:.2s;
+}
+.star:hover{
+    transform:scale(1.3);
+    color:gold;
+}
+.star.active{
+    color:gold;
+}
     
 </style>
 </head>
 
 <body>
 
-<header style="position:relative; display:flex; align-items:center; justify-content:center;">
-<a href="impact.html" class="back-btn" style="position:absolute; left:20px;">← Back</a>
+<header>
+<div style="display:flex; align-items:center; justify-content:space-between;">
+    <a href="impact.html" class="back-btn">← Back</a>
 
-<h2 style="margin:0;">Community Feedback</h2>
+    <h2 style="margin:0;">Community Feedback</h2>
 
-<div id="authArea" style="position:absolute; right:20px;">
-<span id="loginBtn" class="auth-link" onclick="openLogin()">Login</span>
-<span id="logoutBtn" class="auth-link" onclick="logout()" style="display:none;">Logout</span>
-</div>
-</header>
-<div style="
-    padding:20px;
-    max-width:1100px;
-    margin:auto;
-">
-    <button id="createPostBtn"
-        onclick="openModal()"
-        style="
-        display:none;
-        padding:10px 18px;
-        border-radius:30px;
-        background:#4da3ff;
-        color:white;
-        font-weight:600;
-        cursor:pointer;">
-        ✏️ Create Post
+    <button onclick="openReviewModal()" 
+        style="padding:8px 18px;
+               border-radius:30px;
+               background:#4da3ff;
+               color:white;
+               font-weight:600;">
+        ⭐ Rate Us
     </button>
 </div>
+</header>
     
 <div class="dashboard">
 <div class="posts-grid" id="posts"></div>
@@ -409,51 +404,36 @@ to{opacity:1;transform:translateY(0)}
 <!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modal-content">
+<div id="reviewBox">
+<h3 style="text-align:center;">Rate Us</h3>
 
-<div id="authBox">
-<h3>Login</h3>
+<div id="starContainer" style="text-align:center; font-size:28px; margin:15px 0;">
+    <span class="star" data-value="1">☆</span>
+    <span class="star" data-value="2">☆</span>
+    <span class="star" data-value="3">☆</span>
+    <span class="star" data-value="4">☆</span>
+    <span class="star" data-value="5">☆</span>
+</div>
 
-<input id="loginEmail" placeholder="Email">
-<input id="loginPassword" type="password" placeholder="Password">
+<textarea id="reviewText"
+maxlength="300"
+placeholder="Write your review (max 300 characters)..."></textarea>
 
-<button class="primary-btn" onclick="emailLogin()">Login</button>
-    
-<p style="text-align:center;margin:10px 0;">— or —</p>
+<div style="text-align:right; font-size:12px; opacity:.7;">
+    <span id="charCount">0</span>/300
+</div>
+
+<button class="primary-btn" onclick="submitReview()">
+Submit Review
+</button>
 
 <p style="text-align:center;margin-top:12px;">
-    <span class="link-action" onclick="showRegister()">
-        Create an account
-    </span>
+    <button class="google-btn" onclick="googleLogin()">
+        <img src="https://developers.google.com/identity/images/g-logo.png">
+        Sign in with Google
+    </button>
 </p>
-    
-<button class="google-btn" onclick="googleLogin()">
-<img src="https://developers.google.com/identity/images/g-logo.png">
-Continue with Google
-</button>
 </div>
-
-<div id="registerBox" style="display:none;">
-<h3>Create Account</h3>
-<p class="link-action" onclick="openLogin()">← Back to Login</p>
-
-<input id="fname" placeholder="First Name">
-<input id="mname" placeholder="Middle Name">
-<input id="lname" placeholder="Last Name">
-<input id="registerEmail" placeholder="Email">
-<input id="registerPassword" type="password" placeholder="Password">
-
-<button class="primary-btn" onclick="register()">Create Account</button>
-</div>
-
-<div id="postBox" style="display:none;">
-<h3>What’s on Your Mind?</h3>
-
-<div id="postStatus" class="post-status"></div>
-<textarea id="commentText"
-placeholder="Say something..."></textarea>
-<button id="sendBtn" onclick="addPost()">Send</button>
-</div>
-
 </div>
 </div>
 
@@ -471,13 +451,7 @@ addDoc,
 query,
 orderBy,
 onSnapshot,
-serverTimestamp,
-doc,
-getDoc, 
-updateDoc,
-deleteDoc,
-arrayUnion,
-arrayRemove
+serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -507,103 +481,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-let currentUser = null;
-let isAdmin = false;
-let lastPostTime = 0; // anti‑spam timer
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-    
-window.openLogin = () => {
-    modal.style.display="flex";
-    authBox.style.display="block";
-    registerBox.style.display="none";
-    postBox.style.display="none";
-};
-
-window.showRegister = ()=>{
-    authBox.style.display="none";
-    registerBox.style.display="block";
-};
-    
-/* MODAL */
-const modal = document.getElementById("modal");
-
-window.openModal = () => {
-    if(!currentUser){
-        openLogin();
-        return;
-    }
-
-    modal.style.display="flex";
-    authBox.style.display="none";
-    registerBox.style.display="none";
-    postBox.style.display="block";
-};
-
-/* ADD POST */
-window.addPost = async () => {
-
- const status = document.getElementById("postStatus");
- const sendBtn = document.getElementById("sendBtn");
-
- if(!currentUser){
-    status.className="post-status error";
-    status.textContent="⚠ Please login first.";
-    return;
- }
-
- const now = Date.now();
- let wait = 10000 - (now - lastPostTime);
-
- /* ===== COOLDOWN TIMER ===== */
- if(wait > 0){
-    sendBtn.disabled = true;
-
-    const timer = setInterval(()=>{
-        wait -= 1000;
-        status.textContent =
-        `⏳ Wait ${Math.ceil(wait/1000)}s`;
-
-        if(wait <= 0){
-            clearInterval(timer);
-            sendBtn.disabled = false;
-            status.textContent="";
-        }
-    },1000);
-
-    return;
- }
-
- const text = commentText.value.trim();
- if(!text){
-    status.className="post-status error";
-    status.textContent="Write something first.";
-    return;
- }
-
-await addDoc(collection(db,"posts"),{
-   uid: currentUser.uid,          // ✅ ADD
-   edited: false,                 // ✅ ADD
-   name: currentUser.displayName || currentUser.email,
-   username: currentUser.email,
-   userPhoto: currentUser.photoURL ||
-   "https://cdn-icons-png.flaticon.com/512/7175/7175408.png",
-   text:text,
-   likedBy: [],
-   replies: [],
-   time:serverTimestamp()
-});
-
- lastPostTime = now;
- commentText.value="";
- status.className="post-status success";
- status.textContent="✅ Posted successfully!";
-
- setTimeout(()=>{
-     modal.style.display="none";
-     status.textContent="";
- },900);
-};
+let selectedRating = 0;
 
 /* ================= REALTIME POSTS ================= */
 
@@ -625,34 +503,21 @@ window.addEventListener("refreshPosts",()=>{
 
 function renderPosts(snapshot){
     postsContainer.innerHTML="";
-
     snapshot.forEach(docSnap=>{
         const p = docSnap.data();
-        const id = docSnap.id;
-
         const card = document.createElement("div");
         card.className = "post-card";
 
-        const liked =
-        (p.likedBy || []).includes(currentUser?.uid);
-
         card.innerHTML = `
-<div style="position:absolute; top:12px; right:12px; display:flex; gap:10px; font-size:18px; cursor:pointer;">
-${currentUser && isAdmin ? `
-<span onclick="editPost('${id}', \`${p.text}\`)">✏️</span>
-<span onclick="deletePost('${id}')">🗑️</span>
-` : ""}
-</div>
-
 <div class="post-top">
   <img class="avatar"
   src="${p.userPhoto || 'https://cdn-icons-png.flaticon.com/512/7175/7175408.png'}">
   <div>
     <div class="username">
-      ${p.name}
-      ${p.username === "adminken@gmail.com"
-        ? `<span class="admin-badge">👑 Admin</span>`
-        : ""}
+       ${p.name}
+       <span style="color:gold; margin-left:6px;">
+          ${"★".repeat(p.rating || 0)}
+       </span>
     </div>
     <div class="time">
       ${p.time?.toDate().toLocaleString() || ""}
@@ -660,110 +525,12 @@ ${currentUser && isAdmin ? `
   </div>
 </div>
 
-<p>
-${p.text}
-${p.edited ? '<span style="color:gray;font-size:12px;"> (edited)</span>' : ''}
-</p>
-
-${(p.replies && p.replies.length > 0) ? 
-   p.replies.map(r => `
-      <div class="admin-reply">
-         <b>${r.name}</b>: ${r.text}
-      </div>
-   `).join("")
-: ""}
-
-<div class="post-actions">
-   <button class="like-btn"
-   onclick="toggleLike('${id}')">
-   ${liked ? "❤️" : "🤍"} ${(p.likedBy || []).length}
-   </button>
-
-   ${currentUser ? `
-   <div style="
-        margin-top:8px;
-        font-size:14px;
-        color:var(--accent);
-        cursor:pointer;"
-        onclick="replyPost('${id}')">
-        Reply
-   </div>
-   ` : ""}
-</div>
+<p>${p.text}</p>
 `;
+
         postsContainer.appendChild(card);
     });
 }
-    
-/* ================= POST REPLIES ================= */
-window.replyPost = async (postId) => {
-    if(!currentUser){
-        alert("Login first");
-        return;
-    }
-
-    const replyText = prompt("Write reply:");
-    if(!replyText) return;
-
-    const ref = doc(db,"posts",postId);
-    const snap = await getDoc(ref);
-    const data = snap.data();
-
-    const replies = data.replies || [];
-
-    const userReplies = replies.filter(r => r.uid === currentUser.uid);
-
-    if(userReplies.length >= 2){
-        alert("You can only reply twice.");
-        return;
-    }
-
-    replies.push({
-        uid: currentUser.uid,
-        name: currentUser.displayName || currentUser.email,
-        text: replyText,
-        time: serverTimestamp()
-    });
-
-    await updateDoc(ref,{
-        replies: replies
-    });
-};
-
-/* ================= DELETE FUNCTION ================= */
-window.deletePost=async(id)=>{
- if(!confirm("Delete post?")) return;
- await deleteDoc(doc(db,"posts",id));
-}
-
-/* ================= EDIT POST FUNCTION ================= */
-window.editPost = async (id, oldText)=>{
-    const newText = prompt("Edit your post:", oldText);
-    if(!newText) return;
-
-    await updateDoc(doc(db,"posts",id),{
-        text:newText,
-        edited:true
-    });
-};
-
-/* ================= TOOGLE LIKE ================= */
-window.toggleLike = async (postId) => {
-    if(!currentUser){
-        alert("Login to like posts");
-        return;
-    }
-
-    const ref = doc(db,"posts",postId);
-
-    await updateDoc(ref,{
-        likedBy: arrayUnion(currentUser.uid)
-    }).catch(async ()=>{
-        await updateDoc(ref,{
-            likedBy: arrayRemove(currentUser.uid)
-        });
-    });
-};
     
 const modalContent = document.querySelector(".modal-content");
 
@@ -780,85 +547,71 @@ window.googleLogin = async () => {
 
 onAuthStateChanged(auth,(user)=>{
     currentUser = user;
-    isAdmin = user?.email === "adminken@gmail.com";
-
-    loginBtn.style.display = user ? "none" : "inline";
-    logoutBtn.style.display = user ? "inline" : "none";
-
     modal.style.display="none";
 
     if(cachedSnapshot){
         renderPosts(cachedSnapshot);
     }
+});
 
-if(user){
-    document.getElementById("createPostBtn").style.display = "inline-block";
-}else{
-    document.getElementById("createPostBtn").style.display = "none";
+const stars = document.querySelectorAll(".star");
+const reviewText = document.getElementById("reviewText");
+const charCount = document.getElementById("charCount");
+
+stars.forEach(star=>{
+    star.addEventListener("click",()=>{
+        selectedRating = star.dataset.value;
+        updateStars();
+    });
+});
+
+function updateStars(){
+    stars.forEach(star=>{
+        star.textContent =
+        star.dataset.value <= selectedRating ? "★" : "☆";
+    });
 }
-    
-});
-    
-/* ================= EMAIL LOGIN ================= */
-window.emailLogin = async () => {
-    const email = document.getElementById("loginEmail").value.trim();
-    const pass = document.getElementById("loginPassword").value.trim();
-    const postStatus = document.getElementById("postStatus");
 
-    try{
-        await signInWithEmailAndPassword(auth,email,pass);
-
-        postStatus.className="post-status success";
-        postStatus.textContent="✅ Login successful";
-
-        setTimeout(()=>{
-            modal.style.display="none";
-            postStatus.textContent="";
-        },800);
-
-    }catch(error){
-        postStatus.className="post-status error";
-        postStatus.textContent = error.message;
-    }
-};
-
-/* ================= REGISTER ================= */
-window.register = async ()=>{
-    const email = document.getElementById("registerEmail").value.trim();
-    const pass = document.getElementById("registerPassword").value.trim();
-
-    try{
-        await createUserWithEmailAndPassword(auth,email,pass);
-        alert("Account created successfully ✅");
-    }catch(err){
-        alert(err.message);
-    }
-};
-
-/* ================= LOGOUT ================= */
-window.logout = ()=>{
-    signOut(auth);
-};
-
-/* ===== SECRET ADMIN PANEL ===== */
-
-let keysPressed = {};
-
-document.addEventListener("keydown",(e)=>{
-    keysPressed[e.key.toLowerCase()] = true;
-
-    if(keysPressed["control"] && keysPressed["z"] && e.code==="Space"){
-        if(isAdmin){
-            alert("Admin Mode Activated ✅");
-        }else{
-            alert("Not authorized");
-        }
-    }
+reviewText.addEventListener("input",()=>{
+    charCount.textContent = reviewText.value.length;
 });
 
-document.addEventListener("keyup",(e)=>{
-    delete keysPressed[e.key.toLowerCase()];
-});
+window.submitReview = async () => {
+
+    if(!auth.currentUser){
+        alert("Please sign in with Google first.");
+        return;
+    }
+
+    if(selectedRating == 0){
+        alert("Please select a rating.");
+        return;
+    }
+
+    const text = reviewText.value.trim();
+    if(!text){
+        alert("Write something first.");
+        return;
+    }
+
+    await addDoc(collection(db,"posts"),{
+        name: auth.currentUser.displayName,
+        userPhoto: auth.currentUser.photoURL,
+        rating: Number(selectedRating),
+        text:text,
+        replies: [],
+        time: serverTimestamp()
+    });
+
+    modal.style.display="none";
+    reviewText.value="";
+    selectedRating=0;
+    updateStars();
+};
+
+window.onload = ()=>{
+    modal.style.display="flex";
+};
     
 </script>
     
