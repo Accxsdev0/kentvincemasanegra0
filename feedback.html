@@ -151,6 +151,7 @@ header{
     position:fixed;
     right:25px;
     bottom:25px;
+    z-index:9999;
     background:#4da3ff;
     border:none;
     padding:16px 22px;
@@ -365,12 +366,13 @@ to{opacity:1;transform:translateY(0)}
 
 <body>
 
-<header style="display:flex;justify-content:space-between;align-items:center;">
-<a href="impact.html" class="back-btn">← Back</a>
+<header style="position:relative; display:flex; align-items:center; justify-content:center;">
+<a href="impact.html" class="back-btn" style="position:absolute; left:20px;">← Back</a>
 
-<div id="authArea">
+<h2 style="margin:0;">Community Feedback</h2>
+
+<div id="authArea" style="position:absolute; right:20px;">
     <button id="loginBtn" onclick="openLogin()">Login</button>
-
     <button id="logoutBtn"
         onclick="logout()"
         style="display:none;background:#ff4d4d;">
@@ -380,7 +382,7 @@ to{opacity:1;transform:translateY(0)}
 </header>
     
 <div class="dashboard">
-<h2>Community Feedback</h2>
+
 <div class="posts-grid" id="posts"></div>
 </div>
 
@@ -391,7 +393,7 @@ to{opacity:1;transform:translateY(0)}
 <div id="authBox">
 <h3>Login</h3>
 
-<input id="loginUsername" placeholder="Username">
+<input id="loginEmail" placeholder="Email">
 <input id="loginPassword" type="password" placeholder="Password">
 
 <button class="primary-btn" onclick="emailLogin()">Login</button>
@@ -417,8 +419,8 @@ Continue with Google
 <input id="fname" placeholder="First Name">
 <input id="mname" placeholder="Middle Name">
 <input id="lname" placeholder="Last Name">
-<input id="loginUsername" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+<input id="registerEmail" placeholder="Email">
+<input id="registerPassword" type="password" placeholder="Password">
 
 <button class="primary-btn" onclick="register()">Create Account</button>
 </div>
@@ -451,6 +453,7 @@ orderBy,
 onSnapshot,
 serverTimestamp,
 doc,
+getDoc, 
 updateDoc,
 deleteDoc,
 arrayUnion,
@@ -560,16 +563,18 @@ window.addPost = async () => {
     return;
  }
 
- await addDoc(collection(db,"posts"),{
+await addDoc(collection(db,"posts"),{
+   uid: currentUser.uid,          // ✅ ADD
+   edited: false,                 // ✅ ADD
    name: currentUser.displayName || currentUser.email,
    username: currentUser.email,
    userPhoto: currentUser.photoURL ||
    "https://cdn-icons-png.flaticon.com/512/7175/7175408.png",
    text:text,
    likedBy: [],
-   reply:"",
+   replies: [],
    time:serverTimestamp()
- });
+});
 
  lastPostTime = now;
  commentText.value="";
@@ -619,58 +624,112 @@ onclick="deletePost('${id}')">🗑️</div>
        </div>
      </div>
    </div>
+   
+   <p>
+${p.text}
+${p.edited ? '<span style="color:gray;font-size:12px;"> (edited)</span>' : ''}
+</p>
 
-   <p>${p.text}</p>
+${(p.replies && p.replies.length > 0) ? 
+   p.replies.map(r => `
+      <div class="admin-reply">
+         <b>${r.name}</b>: ${r.text}
+      </div>
+   `).join("")
+: ""}
 
 <div class="post-actions">
-<button class="like-btn"
-onclick="toggleLike('${id}', ${JSON.stringify(p.likedBy || [])})">
-${liked ? "❤️" : "🤍"} ${(p.likedBy || []).length}
-</button>
+   <button class="like-btn"
+   onclick="toggleLike('${id}')">
+   ${liked ? "❤️" : "🤍"} ${(p.likedBy || []).length}
+   </button>
 </div>
 
-   ${p.reply ?
-     `<div class="admin-reply"><b>Admin:</b> ${p.reply}</div>`:""}
+<div style="margin-top:10px;">
+${p.uid === currentUser?.uid ? `
+<button onclick="editPost('${id}', \`${p.text}\`)">
+✏ Edit
+</button>
+` : ""}
 
-   ${
-     isAdmin ?
-     `
-     <button onclick="replyPost('${id}')">Reply</button>
-     <button class="delete-btn"
-     onclick="deletePost('${id}')">Delete</button>
-     `:""
-   }
+${isAdmin ? `
+<button onclick="replyPost('${id}')">Reply</button>
+<button class="delete-btn"
+onclick="deletePost('${id}')">Delete</button>
+` : ""}
+</div>
    `;
 
    postsContainer.appendChild(card);
  });
 });
     
-/* ADMIN REPLY */
-window.replyPost=async(id)=>{
- const reply=prompt("Admin reply:");
- if(!reply) return;
+/* ================= POST REPLIES ================= */
+window.replyPost = async (postId) => {
+    if(!currentUser){
+        alert("Login first");
+        return;
+    }
 
- await updateDoc(doc(db,"posts",id),{
-   reply:reply
- });
-}
+    const replyText = prompt("Write reply:");
+    if(!replyText) return;
 
-/* DELETE */
+    const ref = doc(db,"posts",postId);
+    const snap = await getDoc(ref);
+    const data = snap.data();
+
+    const replies = data.replies || [];
+
+    const userReplies = replies.filter(r => r.uid === currentUser.uid);
+
+    if(userReplies.length >= 2){
+        alert("You can only reply twice.");
+        return;
+    }
+
+    replies.push({
+        uid: currentUser.uid,
+        name: currentUser.displayName || currentUser.email,
+        text: replyText,
+        time: new Date()
+    });
+
+    await updateDoc(ref,{
+        replies: replies
+    });
+};
+
+/* ================= DELETE FUNCTION ================= */
 window.deletePost=async(id)=>{
  if(!confirm("Delete post?")) return;
  await deleteDoc(doc(db,"posts",id));
 }
 
-window.toggleLike = async (postId, likedBy=[]) => {
+/* ================= EDIT POST FUNCTION ================= */
+window.editPost = async (id, oldText)=>{
+    const newText = prompt("Edit your post:", oldText);
+    if(!newText) return;
 
+    await updateDoc(doc(db,"posts",id),{
+        text:newText,
+        edited:true
+    });
+};
+
+/* ================= TOOGLE LIKE ================= */
+window.toggleLike = async (postId) => {
     if(!currentUser){
         alert("Login to like posts");
         return;
     }
 
     const ref = doc(db,"posts",postId);
+    const snap = await getDoc(ref);
+    const data = snap.data();
+
+    const likedBy = data.likedBy || [];
     const uid = currentUser.uid;
+
     const alreadyLiked = likedBy.includes(uid);
 
     await updateDoc(ref,{
@@ -721,43 +780,32 @@ if(createPostBtn){
     
 /* ================= EMAIL LOGIN ================= */
 window.emailLogin = async () => {
-const email = loginUsername.value;
-const pass = loginPassword.value;
-const postStatus =
-document.getElementById("postStatus");
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value.trim();
+    const postStatus = document.getElementById("postStatus");
 
-try{
-await signInWithEmailAndPassword(auth,email,pass);
-
-postStatus.className="post-status success";
-postStatus.textContent="✅ Login successful (3)";
-
-let c=3;
-const t=setInterval(()=>{
-c--;
-postStatus.textContent=
-`✅ Login successful (${c})`;
-
-if(c===0){
-clearInterval(t);
-modal.style.display="none";
-postStatus.textContent="";
-}
-},1000);
-
-}catch{
-postStatus.className="post-status error";
-postStatus.textContent="Invalid account.";
-}
+    try{
+        await signInWithEmailAndPassword(auth,email,pass);
+        postStatus.className="post-status success";
+        postStatus.textContent="✅ Login successful";
+        setTimeout(()=>{
+            modal.style.display="none";
+            postStatus.textContent="";
+        },1000);
+    }catch(error){
+        postStatus.className="post-status error";
+        postStatus.textContent = error.message;
+    }
 };
 
 /* ================= REGISTER ================= */
 window.register = async ()=>{
-    const email = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
+    const email = document.getElementById("registerEmail").value.trim();
+    const pass = document.getElementById("registerPassword").value.trim();
 
     try{
         await createUserWithEmailAndPassword(auth,email,pass);
+        alert("Account created successfully ✅");
     }catch(err){
         alert(err.message);
     }
