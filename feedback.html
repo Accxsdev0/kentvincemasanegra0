@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community Feedback</title>
-
 <link rel="icon" href="image/kentlogo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-
 :root{
     --bg:#0f1115;
     --card:#171a21;
@@ -17,7 +14,6 @@
     --text:#ffffff;
     --accent:#4da3ff;
 }
-
 /* LIGHT MODE AUTO */
 @media (prefers-color-scheme: light){
     :root{
@@ -35,8 +31,11 @@ body{
     background:var(--bg);
     color:var(--text);
     transition:.4s;
-} 
-
+    /* ✅ ADD THESE */
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
 /* HEADER */
 header{
     padding:15px 25px;
@@ -46,7 +45,6 @@ header{
     top:0;
     z-index:1000;
 }
-
 .back-btn{
     color:white;
     text-decoration:none;
@@ -55,7 +53,6 @@ header{
     border:1px solid #3a3f4b;
 }
 .back-btn:hover{background:#4da3ff}
-
 .admin-badge{
     margin-left:8px;
     font-size:12px;
@@ -67,7 +64,6 @@ header{
     box-shadow:0 0 10px rgba(255,215,0,.8);
     animation:adminGlow 2s infinite alternate;
 }
-
 @keyframes adminGlow{
     from{box-shadow:0 0 6px rgba(255,215,0,.5);}
     to{box-shadow:0 0 18px rgba(255,215,0,1);}
@@ -80,14 +76,12 @@ header{
     padding:40px 20px;
     flex:1;
 }
-
 .posts-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill, 320px);
     gap:22px;
     justify-content:center;
 }
-
 /* POST CARD */
 .post-card{
     background:var(--card);
@@ -98,7 +92,6 @@ header{
     position:relative;
     word-wrap:break-word;
 }
-
 .post-card p{
     display:-webkit-box;
     -webkit-line-clamp:5;
@@ -119,31 +112,25 @@ header{
     opacity:0;
     transition:.4s;
 }
-
 .post-card:hover{
     transform:translateY(-8px);
     box-shadow:0 25px 55px rgba(0,0,0,.6);
 }
-
 .post-card:hover::after{
     opacity:1;
 }
-
 .post-top{
     display:flex;
     gap:12px;
     align-items:center;
 }
-
 .avatar{
     width:45px;
     height:45px;
     border-radius:50%;
 }
-
 .username{font-weight:600}
 .time{font-size:12px;color:#9aa0aa}
-
 .admin-reply{
     margin-top:12px;
     padding:10px;
@@ -151,7 +138,6 @@ header{
     border-left:3px solid #4da3ff;
     border-radius:6px;
 }
-
 /* MODAL */
 .modal{
     position:fixed;
@@ -163,7 +149,6 @@ header{
     align-items:center;
     animation:fadeIn .3s ease;
 }
-
 /* animated glowing border */
 .modal-content{
     width:92%;
@@ -180,7 +165,6 @@ header{
         0 0 40px rgba(77,163,255,.25),
         0 20px 70px rgba(0,0,0,.6);
 }
-
 @keyframes modalPop{
     from{
         opacity:0;
@@ -191,7 +175,6 @@ header{
         transform:scale(1);
     }
 }
-
 .modal-content::after{
     content:"";
     position:absolute;
@@ -205,7 +188,6 @@ header{
     pointer-events:none;
     animation:glowPulse 4s ease-in-out infinite;
 }
-
 @keyframes glowPulse{
     0%,100%{opacity:.4;}
     50%{opacity:.9;}
@@ -223,7 +205,6 @@ textarea{
     color:var(--text);
     font-size:14px;
 }
-
 textarea{
     width:100%;
     min-height:85px;
@@ -237,7 +218,6 @@ textarea{
     color:white;
     font-size:14px;
 }
-
 button{
     border:none;
     padding:12px;
@@ -247,17 +227,14 @@ button{
     font-weight:600;
     cursor:pointer;
 }
-
 .delete-btn{
     background:#ff4d4d;
     margin-top:8px;
 }
-
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(25px)}
 to{opacity:1;transform:translateY(0)}
 }
-
 .primary-btn{
     width:100%;
     background:linear-gradient(135deg,#4da3ff,#2563eb);
@@ -268,12 +245,10 @@ to{opacity:1;transform:translateY(0)}
     letter-spacing:.3px;
     transition:.25s;
 }
-
 .primary-btn:hover{
     transform:translateY(-1px);
     box-shadow:0 8px 20px rgba(77,163,255,.35);
 }
-
 .link-action{
     color:var(--accent);
     cursor:pointer;
@@ -281,15 +256,12 @@ to{opacity:1;transform:translateY(0)}
     font-weight:500;
     transition:.2s;
 }
-
 .link-action:hover{
     opacity:.7;
 }
-
 .post-actions{
     margin-top:10px;
 }
-
 .like-btn{
     background:#1f2937;
     border-radius:20px;
@@ -297,15 +269,12 @@ to{opacity:1;transform:translateY(0)}
     font-size:14px;
     transition:.2s;
 }
-
 .like-btn:hover{
     background:#ef4444;
 }
-
 .like-btn:active{
     transform:scale(1.25);
 }
-
 .google-btn{
     width:100%;
     background:#fff;
@@ -318,11 +287,9 @@ to{opacity:1;transform:translateY(0)}
     padding:10px;
     font-weight:600;
 }
-
 .google-btn img{
     width:18px;
 }
-
 .post-status{
     font-size:13px;
     margin-bottom:8px;
@@ -336,7 +303,6 @@ to{opacity:1;transform:translateY(0)}
 .post-status.error{
     color:#ff4d4d;
 }
-
 .delete-icon{
     position:absolute;
     top:12px;
@@ -351,99 +317,94 @@ to{opacity:1;transform:translateY(0)}
     opacity:1;
     transform:scale(1.2);
 }
-
 .auth-link{
     cursor:pointer;
     text-decoration:underline;
     font-weight:500;
     transition:.2s;
 }
-
 .auth-link:hover{
     color:var(--accent);
-}
-
-.star{
-    cursor:pointer;
-    transition:.2s;
-}
-.star:hover{
-    transform:scale(1.3);
-    color:gold;
-}
-.star.active{
-    color:gold;
 }
     
 </style>
 </head>
-
 <body>
-
-<header>
-<div style="display:flex; align-items:center; justify-content:space-between;">
-    <a href="impact.html" class="back-btn">← Back</a>
-
-    <h2 style="margin:0;">Community Feedback</h2>
-
-    <button onclick="openReviewModal()" 
-        style="padding:8px 18px;
-               border-radius:30px;
-               background:#4da3ff;
-               color:white;
-               font-weight:600;">
-        ⭐ Rate Us
-    </button>
+<header style="position:relative; display:flex; align-items:center; justify-content:center;">
+<a href="impact.html" class="back-btn" style="position:absolute; left:20px;">← Back</a>
+<h2 style="margin:0;">Community Feedback</h2>
+<div id="authArea" style="position:absolute; right:20px;">
+<span id="loginBtn" class="auth-link" onclick="openLogin()">Login</span>
+<span id="logoutBtn" class="auth-link" onclick="logout()" style="display:none;">Logout</span>
 </div>
 </header>
+<div style="
+    padding:20px;
+    max-width:1100px;
+    margin:auto;
+">
+    <button id="createPostBtn"
+        onclick="openModal()"
+        style="
+        display:none;
+        padding:10px 18px;
+        border-radius:30px;
+        background:#4da3ff;
+        color:white;
+        font-weight:600;
+        cursor:pointer;">
+        ✏️ Create Post
+    </button>
+</div>
     
 <div class="dashboard">
 <div class="posts-grid" id="posts"></div>
 </div>
-
 <!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modal-content">
-<div id="reviewBox">
-<h3 style="text-align:center;">Rate Us</h3>
-
-<div id="starContainer" style="text-align:center; font-size:28px; margin:15px 0;">
-    <span class="star" data-value="1">☆</span>
-    <span class="star" data-value="2">☆</span>
-    <span class="star" data-value="3">☆</span>
-    <span class="star" data-value="4">☆</span>
-    <span class="star" data-value="5">☆</span>
-</div>
-
-<textarea id="reviewText"
-maxlength="300"
-placeholder="Write your review (max 300 characters)..."></textarea>
-
-<div style="text-align:right; font-size:12px; opacity:.7;">
-    <span id="charCount">0</span>/300
-</div>
-
-<button class="primary-btn" onclick="submitReview()">
-Submit Review
-</button>
-
+<div id="authBox">
+<h3>Login</h3>
+<input id="loginEmail" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+<button class="primary-btn" onclick="emailLogin()">Login</button>
+    
+<p style="text-align:center;margin:10px 0;">— or —</p>
 <p style="text-align:center;margin-top:12px;">
-    <button class="google-btn" onclick="googleLogin()">
-        <img src="https://developers.google.com/identity/images/g-logo.png">
-        Sign in with Google
-    </button>
+    <span class="link-action" onclick="showRegister()">
+        Create an account
+    </span>
 </p>
+    
+<button class="google-btn" onclick="googleLogin()">
+<img src="https://developers.google.com/identity/images/g-logo.png">
+Continue with Google
+</button>
+</div>
+<div id="registerBox" style="display:none;">
+<h3>Create Account</h3>
+<p class="link-action" onclick="openLogin()">← Back to Login</p>
+<input id="fname" placeholder="First Name">
+<input id="mname" placeholder="Middle Name">
+<input id="lname" placeholder="Last Name">
+<input id="registerEmail" placeholder="Email">
+<input id="registerPassword" type="password" placeholder="Password">
+<button class="primary-btn" onclick="register()">Create Account</button>
+</div>
+<div id="postBox" style="display:none;">
+<h3>What’s on Your Mind?</h3>
+<div id="postStatus" class="post-status"></div>
+<textarea id="commentText"
+placeholder="Say something..."></textarea>
+<button id="sendBtn" onclick="addPost()">Send</button>
 </div>
 </div>
 </div>
-
 <!-- ✅ FIREBASE SCRIPT -->
 <script type="module">
-
 /* ================= FIREBASE IMPORT ================= */
 import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
 getFirestore,
 collection,
@@ -451,10 +412,15 @@ addDoc,
 query,
 orderBy,
 onSnapshot,
-serverTimestamp
+serverTimestamp,
+doc,
+getDoc, 
+updateDoc,
+deleteDoc,
+arrayUnion,
+arrayRemove
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 import {
 getAuth,
 GoogleAuthProvider,
@@ -465,7 +431,6 @@ onAuthStateChanged,
 signOut
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 /* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyAuYZ68uU9Iw8rN-0Kfm3Wzul2vpJMD6XE",
@@ -475,143 +440,300 @@ const firebaseConfig = {
   messagingSenderId: "386160813839",
   appId: "1:386160813839:web:b3f6e6ca211e9b742b007a"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-
-let selectedRating = 0;
-
+let currentUser = null;
+let isAdmin = false;
+let lastPostTime = 0; // anti‑spam timer
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+    
+window.openLogin = () => {
+    modal.style.display="flex";
+    authBox.style.display="block";
+    registerBox.style.display="none";
+    postBox.style.display="none";
+};
+window.showRegister = ()=>{
+    authBox.style.display="none";
+    registerBox.style.display="block";
+};
+    
+/* MODAL */
+const modal = document.getElementById("modal");
+window.openModal = () => {
+    if(!currentUser){
+        openLogin();
+        return;
+    }
+    modal.style.display="flex";
+    authBox.style.display="none";
+    registerBox.style.display="none";
+    postBox.style.display="block";
+};
+/* ADD POST */
+window.addPost = async () => {
+ const status = document.getElementById("postStatus");
+ const sendBtn = document.getElementById("sendBtn");
+ if(!currentUser){
+    status.className="post-status error";
+    status.textContent="⚠ Please login first.";
+    return;
+ }
+ const now = Date.now();
+ let wait = 10000 - (now - lastPostTime);
+ /* ===== COOLDOWN TIMER ===== */
+ if(wait > 0){
+    sendBtn.disabled = true;
+    const timer = setInterval(()=>{
+        wait -= 1000;
+        status.textContent =
+        `⏳ Wait ${Math.ceil(wait/1000)}s`;
+        if(wait <= 0){
+            clearInterval(timer);
+            sendBtn.disabled = false;
+            status.textContent="";
+        }
+    },1000);
+    return;
+ }
+ const text = commentText.value.trim();
+ if(!text){
+    status.className="post-status error";
+    status.textContent="Write something first.";
+    return;
+ }
+await addDoc(collection(db,"posts"),{
+   uid: currentUser.uid,          // ✅ ADD
+   edited: false,                 // ✅ ADD
+   name: currentUser.displayName || currentUser.email,
+   username: currentUser.email,
+   userPhoto: currentUser.photoURL ||
+   "https://cdn-icons-png.flaticon.com/512/7175/7175408.png",
+   text:text,
+   likedBy: [],
+   replies: [],
+   time:serverTimestamp()
+});
+ lastPostTime = now;
+ commentText.value="";
+ status.className="post-status success";
+ status.textContent="✅ Posted successfully!";
+ setTimeout(()=>{
+     modal.style.display="none";
+     status.textContent="";
+ },900);
+};
 /* ================= REALTIME POSTS ================= */
-
 const postsContainer = document.getElementById("posts");
 const q = query(collection(db,"posts"), orderBy("time","desc"));
-
 let cachedSnapshot = null;
-
 onSnapshot(q,(snapshot)=>{
     cachedSnapshot = snapshot;
     renderPosts(snapshot);
 });
-
 window.addEventListener("refreshPosts",()=>{
     if(cachedSnapshot){
         renderPosts(cachedSnapshot);
     }
 });
-
 function renderPosts(snapshot){
     postsContainer.innerHTML="";
     snapshot.forEach(docSnap=>{
         const p = docSnap.data();
+        const id = docSnap.id;
         const card = document.createElement("div");
         card.className = "post-card";
-
+        const liked =
+        (p.likedBy || []).includes(currentUser?.uid);
         card.innerHTML = `
+<div style="position:absolute; top:12px; right:12px; display:flex; gap:10px; font-size:18px; cursor:pointer;">
+${currentUser && isAdmin ? `
+<span onclick="editPost('${id}', \`${p.text}\`)">✏️</span>
+<span onclick="deletePost('${id}')">🗑️</span>
+` : ""}
+</div>
 <div class="post-top">
   <img class="avatar"
   src="${p.userPhoto || 'https://cdn-icons-png.flaticon.com/512/7175/7175408.png'}">
   <div>
     <div class="username">
-       ${p.name}
-       <span style="color:gold; margin-left:6px;">
-          ${"★".repeat(p.rating || 0)}
-       </span>
+      ${p.name}
+      ${p.username === "adminken@gmail.com"
+        ? `<span class="admin-badge">👑 Admin</span>`
+        : ""}
     </div>
     <div class="time">
       ${p.time?.toDate().toLocaleString() || ""}
     </div>
   </div>
 </div>
-
-<p>${p.text}</p>
+<p>
+${p.text}
+${p.edited ? '<span style="color:gray;font-size:12px;"> (edited)</span>' : ''}
+</p>
+${(p.replies && p.replies.length > 0) ? 
+   p.replies.map(r => `
+      <div class="admin-reply">
+         <b>${r.name}</b>: ${r.text}
+      </div>
+   `).join("")
+: ""}
+<div class="post-actions">
+   <button class="like-btn"
+   onclick="toggleLike('${id}')">
+   ${liked ? "❤️" : "🤍"} ${(p.likedBy || []).length}
+   </button>
+   ${currentUser ? `
+   <div style="
+        margin-top:8px;
+        font-size:14px;
+        color:var(--accent);
+        cursor:pointer;"
+        onclick="replyPost('${id}')">
+        Reply
+   </div>
+   ` : ""}
+</div>
 `;
-
         postsContainer.appendChild(card);
     });
 }
     
+/* ================= POST REPLIES ================= */
+window.replyPost = async (postId) => {
+    if(!currentUser){
+        alert("Login first");
+        return;
+    }
+    const replyText = prompt("Write reply:");
+    if(!replyText) return;
+    const ref = doc(db,"posts",postId);
+    const snap = await getDoc(ref);
+    const data = snap.data();
+    const replies = data.replies || [];
+    const userReplies = replies.filter(r => r.uid === currentUser.uid);
+    if(userReplies.length >= 2){
+        alert("You can only reply twice.");
+        return;
+    }
+    replies.push({
+        uid: currentUser.uid,
+        name: currentUser.displayName || currentUser.email,
+        text: replyText,
+        time: serverTimestamp()
+    });
+    await updateDoc(ref,{
+        replies: replies
+    });
+};
+/* ================= DELETE FUNCTION ================= */
+window.deletePost=async(id)=>{
+ if(!confirm("Delete post?")) return;
+ await deleteDoc(doc(db,"posts",id));
+}
+/* ================= EDIT POST FUNCTION ================= */
+window.editPost = async (id, oldText)=>{
+    const newText = prompt("Edit your post:", oldText);
+    if(!newText) return;
+    await updateDoc(doc(db,"posts",id),{
+        text:newText,
+        edited:true
+    });
+};
+/* ================= TOOGLE LIKE ================= */
+window.toggleLike = async (postId) => {
+    if(!currentUser){
+        alert("Login to like posts");
+        return;
+    }
+    const ref = doc(db,"posts",postId);
+    await updateDoc(ref,{
+        likedBy: arrayUnion(currentUser.uid)
+    }).catch(async ()=>{
+        await updateDoc(ref,{
+            likedBy: arrayRemove(currentUser.uid)
+        });
+    });
+};
+    
 const modalContent = document.querySelector(".modal-content");
-
 modal.addEventListener("click",(e)=>{
     if(!modalContent.contains(e.target)){
         modal.style.display="none";
     }
 });
-
 /* ================= GOOGLE LOGIN ================= */
 window.googleLogin = async () => {
     await signInWithPopup(auth, googleProvider);
 };
-
 onAuthStateChanged(auth,(user)=>{
     currentUser = user;
+    isAdmin = user?.email === "adminken@gmail.com";
+    loginBtn.style.display = user ? "none" : "inline";
+    logoutBtn.style.display = user ? "inline" : "none";
     modal.style.display="none";
-
     if(cachedSnapshot){
         renderPosts(cachedSnapshot);
     }
-});
-
-const stars = document.querySelectorAll(".star");
-const reviewText = document.getElementById("reviewText");
-const charCount = document.getElementById("charCount");
-
-stars.forEach(star=>{
-    star.addEventListener("click",()=>{
-        selectedRating = star.dataset.value;
-        updateStars();
-    });
-});
-
-function updateStars(){
-    stars.forEach(star=>{
-        star.textContent =
-        star.dataset.value <= selectedRating ? "★" : "☆";
-    });
+if(user){
+    document.getElementById("createPostBtn").style.display = "inline-block";
+}else{
+    document.getElementById("createPostBtn").style.display = "none";
 }
-
-reviewText.addEventListener("input",()=>{
-    charCount.textContent = reviewText.value.length;
+    
 });
-
-window.submitReview = async () => {
-
-    if(!auth.currentUser){
-        alert("Please sign in with Google first.");
-        return;
+    
+/* ================= EMAIL LOGIN ================= */
+window.emailLogin = async () => {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value.trim();
+    const postStatus = document.getElementById("postStatus");
+    try{
+        await signInWithEmailAndPassword(auth,email,pass);
+        postStatus.className="post-status success";
+        postStatus.textContent="✅ Login successful";
+        setTimeout(()=>{
+            modal.style.display="none";
+            postStatus.textContent="";
+        },800);
+    }catch(error){
+        postStatus.className="post-status error";
+        postStatus.textContent = error.message;
     }
-
-    if(selectedRating == 0){
-        alert("Please select a rating.");
-        return;
-    }
-
-    const text = reviewText.value.trim();
-    if(!text){
-        alert("Write something first.");
-        return;
-    }
-
-    await addDoc(collection(db,"posts"),{
-        name: auth.currentUser.displayName,
-        userPhoto: auth.currentUser.photoURL,
-        rating: Number(selectedRating),
-        text:text,
-        replies: [],
-        time: serverTimestamp()
-    });
-
-    modal.style.display="none";
-    reviewText.value="";
-    selectedRating=0;
-    updateStars();
 };
-
-window.onload = ()=>{
-    modal.style.display="flex";
+/* ================= REGISTER ================= */
+window.register = async ()=>{
+    const email = document.getElementById("registerEmail").value.trim();
+    const pass = document.getElementById("registerPassword").value.trim();
+    try{
+        await createUserWithEmailAndPassword(auth,email,pass);
+        alert("Account created successfully ✅");
+    }catch(err){
+        alert(err.message);
+    }
 };
+/* ================= LOGOUT ================= */
+window.logout = ()=>{
+    signOut(auth);
+};
+/* ===== SECRET ADMIN PANEL ===== */
+let keysPressed = {};
+document.addEventListener("keydown",(e)=>{
+    keysPressed[e.key.toLowerCase()] = true;
+    if(keysPressed["control"] && keysPressed["z"] && e.code==="Space"){
+        if(isAdmin){
+            alert("Admin Mode Activated ✅");
+        }else{
+            alert("Not authorized");
+        }
+    }
+});
+document.addEventListener("keyup",(e)=>{
+    delete keysPressed[e.key.toLowerCase()];
+});
     
 </script>
     
