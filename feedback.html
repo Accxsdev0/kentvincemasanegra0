@@ -345,22 +345,44 @@ to{opacity:1;transform:translateY(0)}
 .marquee{
     width:100%;
     overflow:hidden;
-    background:#111827;
-    border-bottom:1px solid var(--border);
+    position:relative;
+    background:linear-gradient(90deg,#0f1115,#141822,#0f1115);
     white-space:nowrap;
+    padding:12px 0;
+}
+
+/* animated neon border */
+.marquee::before{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:2px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #4da3ff,
+        #00ffd5,
+        #4da3ff,
+        transparent
+    );
+    background-size:200% 100%;
+    animation:borderFlow 4s linear infinite;
+}
+
+@keyframes borderFlow{
+    from{ background-position:0% 0; }
+    to{ background-position:200% 0; }
 }
 
 .marquee-track{
     display:inline-block;
-    padding:10px 0;
     font-weight:600;
+    font-size:14px;
+    letter-spacing:.5px;
     color:#4da3ff;
-    animation:scrollMarquee 25s linear infinite;
-}
-
-@keyframes scrollMarquee{
-    from{ transform:translateX(0); }
-    to{ transform:translateX(-50%); }
+    animation:scrollMarquee 40s linear infinite;
 }
     
 </style>
@@ -645,53 +667,36 @@ ${(p.replies && p.replies.length > 0) ?
     
 /* ================= POST REPLIES ================= */
 window.replyPost = async (postId) => {
-    if(!currentUser){
-        alert("Login first");
-        return;
-    }
+    if(!currentUser) return;
+
     const replyText = prompt("Write reply:");
     if(!replyText) return;
+
     const ref = doc(db,"posts",postId);
-    const snap = await getDoc(ref);
-    const data = snap.data();
-    const replies = data.replies || [];
-    const userReplies = replies.filter(r => r.uid === currentUser.uid);
-    if(userReplies.length >= 2){
-        alert("You can only reply twice.");
-        return;
-    }
-    replies.push({
-        uid: currentUser.uid,
-        name: currentUser.displayName || currentUser.email,
-        text: replyText,
-        time: serverTimestamp()
-    });
+
     await updateDoc(ref,{
-        replies: replies
+        replies: arrayUnion({
+            uid: currentUser.uid,
+            name: currentUser.displayName || currentUser.email,
+            text: replyText,
+            time: new Date()
+        })
     });
 };
+    
 /* ================= TOOGLE LIKE ================= */
 window.toggleLike = async (postId) => {
-    if(!currentUser){
-        alert("Login to like posts");
-        return;
-    }
+    if(!currentUser) return;
 
     const ref = doc(db,"posts",postId);
-    const snap = await getDoc(ref);
-    const data = snap.data();
 
-    const likedBy = data.likedBy || [];
-
-    if(likedBy.includes(currentUser.uid)){
+    await updateDoc(ref,{
+        likedBy: arrayUnion(currentUser.uid)
+    }).catch(async ()=>{
         await updateDoc(ref,{
             likedBy: arrayRemove(currentUser.uid)
         });
-    }else{
-        await updateDoc(ref,{
-            likedBy: arrayUnion(currentUser.uid)
-        });
-    }
+    });
 };
     
 const modalContent = document.querySelector(".modal-content");
@@ -725,10 +730,15 @@ const marqueeTrack = document.getElementById("marqueeTrack");
 function fillMarquee() {
     if(!marqueeTrack) return;
 
-    const baseText = "Welcome! Your thoughts and ideas matter here....       | © 2026 Kent Vince S. Masanegra |       ";
+    const baseText = 
+    "✨ Welcome! Your thoughts and ideas matter here.        " +
+    "🚀 Share your feedback freely.        " +
+    "💬 Every review can receive replies.        " +
+    "🌟 Community driven discussions.        ";
+
     marqueeTrack.innerHTML = baseText;
 
-    while (marqueeTrack.offsetWidth < window.innerWidth * 2) {
+    while (marqueeTrack.scrollWidth < window.innerWidth * 3) {
         marqueeTrack.innerHTML += baseText;
     }
 }
