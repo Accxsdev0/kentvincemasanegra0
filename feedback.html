@@ -78,7 +78,7 @@ header{
 }
 .posts-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill, 320px);
+    grid-template-columns:repeat(auto-fill, minmax(380px,1fr));
     gap:22px;
     justify-content:center;
 }
@@ -341,6 +341,27 @@ to{opacity:1;transform:translateY(0)}
         transform:translateY(0);
     }
 }
+
+.marquee{
+    width:100%;
+    overflow:hidden;
+    background:#111827;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+}
+
+.marquee-track{
+    display:inline-block;
+    padding:10px 0;
+    font-weight:600;
+    color:#4da3ff;
+    animation:scrollMarquee 25s linear infinite;
+}
+
+@keyframes scrollMarquee{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+}
     
 </style>
 </head>
@@ -353,12 +374,19 @@ to{opacity:1;transform:translateY(0)}
 <span id="logoutBtn" class="auth-link" onclick="logout()" style="display:none;">Logout</span>
 </div>
 </header>
+    
+<div class="marquee">
+    <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+    
 <div style="
     padding:20px;
     max-width:1100px;
-    margin:auto;
+    margin:0 auto;
     position:relative;
     z-index:10;
+    display:flex;
+    justify-content:flex-start;
 ">
     <button id="createPostBtn"
     onclick="openModal()"
@@ -691,6 +719,22 @@ if(user){
 }
     
 });
+
+const marqueeTrack = document.getElementById("marqueeTrack");
+
+function fillMarquee() {
+    if(!marqueeTrack) return;
+
+    const baseText = "Welcome! Your thoughts and ideas matter here. • ";
+    marqueeTrack.innerHTML = baseText;
+
+    while (marqueeTrack.offsetWidth < window.innerWidth * 2) {
+        marqueeTrack.innerHTML += baseText;
+    }
+}
+
+fillMarquee();
+window.addEventListener("resize", fillMarquee);
     
 /* ================= EMAIL LOGIN ================= */
 window.emailLogin = async () => {
