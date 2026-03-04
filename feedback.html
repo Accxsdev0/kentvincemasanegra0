@@ -272,6 +272,7 @@ header{
     padding:30px;
     border-radius:20px;
     position:relative;
+    animation: modalPop .35s cubic-bezier(.22,1,.36,1);
     background:
         linear-gradient(var(--card),var(--card)) padding-box,
         linear-gradient(120deg,#4da3ff,#00ffd5,#4da3ff) border-box;
@@ -603,10 +604,35 @@ body.modal-open .dashboard{
 <header style="position:relative; display:flex; align-items:center; justify-content:center;">
 <a href="index.html" class="back-btn" style="position:absolute; left:20px;">← Back</a>
 <h2 style="margin:0;">Community Feedback</h2>
-<div id="authArea" style="position:absolute; right:20px; display:flex; gap:10px; align-items:center;">
-<span id="userDisplay" style="font-weight:600;"></span>
+<div id="authArea" style="position:absolute; right:20px; display:flex; align-items:center;">
+
+<div id="profileWrapper" style="position:relative; display:none;">
+
+    <div id="userDisplay"
+         style="font-weight:600; cursor:pointer;">
+    </div>
+
+    <div id="profileDropdown" style="
+        position:absolute;
+        right:0;
+        top:120%;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:12px;
+        padding:10px;
+        width:160px;
+        display:none;
+        box-shadow:0 15px 35px rgba(0,0,0,.4);
+    ">
+        <div style="padding:8px; cursor:pointer;" onclick="confirmLogout()">
+            🚪 Logout
+        </div>
+    </div>
+
+</div>
+
 <span id="loginBtn" class="auth-link" onclick="openLogin()">Login</span>
-<span id="logoutBtn" class="auth-link" onclick="logout()" style="display:none;">Logout</span>
+
 </div>
 </header>
     
@@ -697,6 +723,15 @@ placeholder="Say something..."></textarea>
 <textarea id="replyTextArea" placeholder="Type your reply..."></textarea>
 <button class="primary-btn" onclick="submitReply()">Send Reply</button>
 </div>
+<div id="confirmBox" style="display:none; text-align:center;">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to logout?</p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+        <button onclick="logout()">Yes</button>
+        <button onclick="closeConfirm()" style="background:#444;">Cancel</button>
+    </div>
+</div>
+
 </div>
 </div>
 <!-- ✅ FIREBASE SCRIPT -->
@@ -764,6 +799,7 @@ window.showRegister = ()=>{
     
 /* MODAL */
 const modal = document.getElementById("modal");
+const confirmBox = document.getElementById("confirmBox");
 window.openModal = () => {
     if(!currentUser){
         openLogin();
@@ -1054,18 +1090,18 @@ onAuthStateChanged(auth,(user)=>{
     }
 if(user){
 
-    document.getElementById("createPostBtn").style.display = "inline-block";
+    profileWrapper.style.display = "block";
+    loginBtn.style.display = "none";
 
-    // SHOW USER NAME
-    document.getElementById("userDisplay").textContent =
+    userDisplay.textContent =
         user.displayName || user.email;
 
 }else{
 
-    document.getElementById("createPostBtn").style.display = "none";
+    profileWrapper.style.display = "none";
+    loginBtn.style.display = "inline";
 
-    // CLEAR NAME WHEN LOGGED OUT
-    document.getElementById("userDisplay").textContent = "";
+    userDisplay.textContent = "";
 }
     
 });
@@ -1134,7 +1170,42 @@ window.toggleRead = (id)=>{
 /* ================= LOGOUT ================= */
 window.logout = ()=>{
     signOut(auth);
-};    
+    modal.style.display="none";
+    document.body.classList.remove("modal-open");
+};;    
+
+window.confirmLogout = () => {
+    modal.style.display = "flex";
+    document.body.classList.add("modal-open");
+
+    authBox.style.display="none";
+    registerBox.style.display="none";
+    postBox.style.display="none";
+    replyBox.style.display="none";
+    confirmBox.style.display="block";
+};
+
+window.closeConfirm = () => {
+    modal.style.display = "none";
+    document.body.classList.remove("modal-open");
+};
+    
+const profileWrapper = document.getElementById("profileWrapper");
+const profileDropdown = document.getElementById("profileDropdown");
+const userDisplay = document.getElementById("userDisplay");
+
+userDisplay.addEventListener("click", () => {
+    profileDropdown.style.display =
+        profileDropdown.style.display === "block" ? "none" : "block";
+});
+
+// Close dropdown when clicking outside
+document.addEventListener("click", (e) => {
+    if (!profileWrapper.contains(e.target)) {
+        profileDropdown.style.display = "none";
+    }
+});
+    
 </script>
     
 <footer style="
