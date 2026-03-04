@@ -61,6 +61,12 @@ body{
     align-items:center;
     gap:12px;
 }
+
+#profileWrapper{
+    display:flex;
+    align-items:center;
+    gap:14px; /* space between name and logout */
+}
     
 .back-btn{
     color:white;
@@ -633,6 +639,39 @@ body.modal-open .dashboard{
     pointer-events:none;
     user-select:none;
 }
+
+.confirm-btn{
+    flex:1;
+    padding:12px 0;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    min-width:120px;
+}
+
+.yes-btn{
+    background:#ef4444;
+    color:white;
+}
+
+.no-btn{
+    background:#1f2937;
+    color:white;
+}
+
+.confirm-btn:hover{
+    box-shadow:0 0 15px rgba(255,255,255,.4);
+    transform:translateY(-2px);
+}
+
+.yes-btn:hover{
+    box-shadow:0 0 20px rgba(239,68,68,.9);
+}
+
+.no-btn:hover{
+    box-shadow:0 0 20px rgba(77,163,255,.9);
+}
     
 </style>
 </head>
@@ -1175,11 +1214,23 @@ window.toggleRead = (id)=>{
 };
     
 /* ================= LOGOUT ================= */
+const logoutModal = document.getElementById("logoutModal");
+
 window.logout = ()=>{
-    signOut(auth);
-    modal.style.display="none";
+    logoutModal.style.display = "flex";
+    document.body.classList.add("modal-open");
+};
+
+window.closeLogoutModal = ()=>{
+    logoutModal.style.display = "none";
     document.body.classList.remove("modal-open");
-};;    
+};
+
+window.confirmLogout = async ()=>{
+    await signOut(auth);
+    logoutModal.style.display = "none";
+    document.body.classList.remove("modal-open");
+};
     
 </script>
     
@@ -1191,6 +1242,16 @@ opacity:.7;
 font-size:14px;">
 © 2026 Kent Vince S. Masanegra || All Rights Reserved
 </footer>
-    
+<!-- LOGOUT CONFIRM MODAL -->
+<div class="modal" id="logoutModal">
+  <div class="modal-content" style="text-align:center;">
+    <h3>Are you sure you want to log out?</h3>
+
+    <div style="display:flex; gap:15px; margin-top:25px; justify-content:center;">
+      <button class="confirm-btn yes-btn" onclick="confirmLogout()">Yes</button>
+      <button class="confirm-btn no-btn" onclick="closeLogoutModal()">No</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
