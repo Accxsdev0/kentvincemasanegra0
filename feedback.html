@@ -54,9 +54,11 @@ header{
 }
 .back-btn:hover{background:#4da3ff}
 .admin-badge{
-    margin-left:8px;
+    margin-left:2px;
     font-size:12px;
     padding:3px 8px;
+    position:relative;
+    top:-3px;
     border-radius:20px;
     background:linear-gradient(90deg,#ffd700,#ffae00);
     color:#000;
@@ -84,9 +86,11 @@ header{
 }
 
 .mod-badge{
-    margin-left:8px;
+    margin-left:2px;
     font-size:12px;
     padding:3px 8px;
+    position:relative;
+    top:-3px;
     border-radius:20px;
     background:linear-gradient(90deg,#00c6ff,#0072ff);
     color:#fff;
@@ -104,18 +108,32 @@ header{
     animation:badgePulse 2s infinite alternate;
 }
     
-/* DASHBOARD */
+/* ================= DASHBOARD LAYOUT ================= */
+
 .dashboard{
-    max-width:1100px;
-    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:40px;
     padding:40px 20px;
     flex:1;
+    width:100%;
+    box-sizing:border-box;
+}
+
+/* SIDE PANELS */
+.left-side,
+.right-side{
+    width:250px;
+    min-height:200px;
+}
+
+/* CENTER POSTS */
+.posts-grid{
+    width:700px;
+    max-width:100%;
 }
     
-.posts-grid{
-    column-count:2;
-    column-gap:22px;
-}
 /* POST CARD */
 .post-card{
     background:var(--card);
@@ -131,6 +149,7 @@ header{
 }
 
 .post-text{
+    white-space:pre-line;
     display:-webkit-box;
     -webkit-line-clamp:5;
     -webkit-box-orient:vertical;
@@ -488,12 +507,18 @@ to{opacity:1;transform:translateY(0)}
 
 @media (max-width:768px){
 
-.posts-grid{
-    column-count:1;
+.dashboard{
+    flex-direction:column;
+    align-items:center;
 }
 
-.dashboard{
-    padding:20px 15px;
+.left-side,
+.right-side{
+    width:100%;
+}
+
+.posts-grid{
+    width:100%;
 }
 
 .post-card{
@@ -556,8 +581,22 @@ header{
 </div>
     
 <div class="dashboard">
-<div class="posts-grid" id="posts"></div>
+
+    <!-- LEFT SIDE PANEL -->
+    <div class="left-side">
+        <!-- You can put widgets here later -->
+    </div>
+
+    <!-- CENTER POSTS -->
+    <div class="posts-grid" id="posts"></div>
+
+    <!-- RIGHT SIDE PANEL -->
+    <div class="right-side">
+        <!-- Future content -->
+    </div>
+
 </div>
+    
 <!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modal-content">
