@@ -93,11 +93,11 @@ header{
     animation:badgePulse 2s infinite alternate;
 }
 
-.verified-badge{
-    margin-left:6px;
-    font-size:12px;
-    color:#4da3ff;
-    font-weight:700;
+.verified-icon{
+    width:16px;
+    height:16px;
+    margin-right:6px;
+    vertical-align:middle;
     animation:badgePulse 2s infinite alternate;
 }
     
@@ -124,11 +124,25 @@ header{
     position:relative;
     word-wrap:break-word;
 }
-.post-card p{
+
+.post-text{
     display:-webkit-box;
     -webkit-line-clamp:5;
     -webkit-box-orient:vertical;
     overflow:hidden;
+    transition:all .3s ease;
+}
+
+.post-text.expanded{
+    -webkit-line-clamp:unset;
+    display:block;
+}
+.read-more{
+    color:var(--accent);
+    font-size:13px;
+    cursor:pointer;
+    margin-top:5px;
+    display:inline-block;
 }
     
 .post-card::after{
@@ -529,6 +543,11 @@ Continue with Google
 placeholder="Say something..."></textarea>
 <button id="sendBtn" onclick="addPost()">Send</button>
 </div>
+<div id="replyBox" style="display:none;">
+<h3>Write a Reply</h3>
+<textarea id="replyTextArea" placeholder="Type your reply..."></textarea>
+<button class="primary-btn" onclick="submitReply()">Send Reply</button>
+</div>
 </div>
 </div>
 <!-- ✅ FIREBASE SCRIPT -->
@@ -683,33 +702,42 @@ function renderPosts(snapshot){
   <img class="avatar"
   src="${p.userPhoto || 'https://cdn-icons-png.flaticon.com/512/7175/7175408.png'}">
   <div>
-    <div class="username">
-      ${p.name}
+<div class="username">
 
-      ${
-      p.username === "ablaomaryan@gmail.com" ||
-      p.username === "masanegrakentvinces@gmail.com"
-      ? `<span class="admin-badge">💠 Admin</span>`
-      : p.username === "zaorichan934@gmail.com"
-      ? `<span class="vip-badge">💎 VIP</span>`
-      : p.username === "bryan.ablao@societybrands.com"
-      ? `<span class="mod-badge">Ⓜ️ Moderator</span>`
-      : ""
-      }
+  ${p.userPhoto ? 
+  `<img src="image/verified.png" class="verified-icon">`
+  : ""}
 
-      ${p.userPhoto ? `<span class="verified-badge">✔</span>` : ""}
-    </div>
+  ${p.name}
 
+  ${
+  p.username === "masanegrakentvinces@gmail.com"
+  ? `<span class="admin-badge">💠 Admin</span>`
+  : p.username === "zaorichan934@gmail.com" ||
+  p.username === "lxlithamxthyst@gmail.com" ||
+  p.username === "ablaobryan4400@gmail.com"
+  ? `<span class="vip-badge">💎 VIP</span>`
+  : p.username === "ablaomaryan@gmail.com"
+  ? `<span class="mod-badge">Ⓜ️ Moderator</span>`
+  : ""
+  }
+
+</div>
     <div class="time">
       ${p.time?.toDate().toLocaleString() || ""}
     </div>
   </div>
 </div>
 
-<p>
+<p class="post-text" id="text-${id}">
 ${p.text}
 ${p.edited ? '<span style="color:gray;font-size:12px;"> (edited)</span>' : ''}
 </p>
+
+<div class="read-more"
+onclick="toggleRead('${id}')">
+... Read more
+</div>
 
 <div class="post-actions">
    <button class="like-btn"
@@ -732,7 +760,24 @@ ${p.edited ? '<span style="color:gray;font-size:12px;"> (edited)</span>' : ''}
 ${(p.replies && p.replies.length > 0) ? 
    p.replies.map(r => `
       <div class="reply-item">
-         <b>${r.name}</b>: ${r.text}
+
+         <b>
+         ${r.name}
+
+         ${
+         r.username === "email" === "masanegrakentvinces@gmail.com"
+         ? `<span class="admin-badge">💠 Admin</span>`
+         : r.username === "email" === "zaorichan934@gmail.com" ||
+         r.username === "email" === "lxlithamxthyst@gmail.com" ||
+         r.username === "email" === "ablaobryan4400@gmail.com"
+         ? `<span class="vip-badge">💎 VIP</span>`
+         : r.username === "email" === "ablaomaryan@gmail.com"
+         ? `<span class="mod-badge">Ⓜ️ Moderator</span>`
+         : ""
+         }
+
+         </b>: ${r.text}
+
       </div>
    `).join("")
 : ""}
@@ -742,22 +787,37 @@ ${(p.replies && p.replies.length > 0) ?
 }
     
 /* ================= POST REPLIES ================= */
-window.replyPost = async (postId) => {
+let activeReplyPostId = null;
+
+window.replyPost = (postId)=>{
     if(!currentUser) return;
+    activeReplyPostId = postId;
 
-    const replyText = prompt("Write reply:");
-    if(!replyText) return;
+    modal.style.display="flex";
+    authBox.style.display="none";
+    registerBox.style.display="none";
+    postBox.style.display="none";
+    replyBox.style.display="block";
+};
 
-    const ref = doc(db,"posts",postId);
+window.submitReply = async ()=>{
+    const text = document.getElementById("replyTextArea").value.trim();
+    if(!text) return;
+
+    const ref = doc(db,"posts",activeReplyPostId);
 
     await updateDoc(ref,{
         replies: arrayUnion({
             uid: currentUser.uid,
             name: currentUser.displayName || currentUser.email,
-            text: replyText,
+            username: currentUser.email,
+            text: text,
             time: new Date()
         })
     });
+
+    document.getElementById("replyTextArea").value="";
+    modal.style.display="none";
 };
     
 /* ================= TOOGLE LIKE ================= */
@@ -854,6 +914,21 @@ window.register = async ()=>{
         alert(err.message);
     }
 };
+
+/* ================= Read More ================= */
+window.toggleRead = (id)=>{
+    const textEl = document.getElementById(`text-${id}`);
+    const btn = textEl.nextElementSibling;
+
+    if(textEl.classList.contains("expanded")){
+        textEl.classList.remove("expanded");
+        btn.textContent="... Read more";
+    }else{
+        textEl.classList.add("expanded");
+        btn.textContent="Show less";
+    }
+};
+    
 /* ================= LOGOUT ================= */
 window.logout = ()=>{
     signOut(auth);
